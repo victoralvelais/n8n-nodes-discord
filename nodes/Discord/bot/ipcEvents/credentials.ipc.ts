@@ -7,6 +7,7 @@ import commands from '../commands';
 export default async function (ipc: typeof Ipc, client: Client) {
   ipc.server.on('credentials', (data: ICredentials, socket: any) => {
     try {
+      addLog(`credentials state login ${state.login}, ready ${state.ready}`, client);
       if (
         (!state.login && !state.ready) ||
         (state.ready && (state.clientId !== data.clientId || state.token !== data.token))
@@ -44,6 +45,8 @@ export default async function (ipc: typeof Ipc, client: Client) {
         ipc.server.emit(socket, 'credentials', 'already');
       }
     } catch (e) {
+      state.login = false;
+      ipc.server.emit(socket, 'credentials', 'error');
       addLog(`${e}`, client);
     }
   });
