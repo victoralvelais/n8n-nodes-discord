@@ -317,11 +317,11 @@ export const placeholderLoading = async (
   waiting();
 };
 
-export const withTimeout = (millis, promise) => {
+export function withTimeout<T>(promise: Promise<T>, ms: number) {
     const timeout = new Promise((resolve, reject) =>
         setTimeout(
-            () => reject(`Timed out after ${millis} ms.`),
-            millis));
+            () => reject(`Timed out after ${ms} ms.`),
+            ms));
     return Promise.race([
         promise,
         timeout
