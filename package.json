@@ -1,5 +1,5 @@
 {
-	"name": "n8n-nodes-discord",
+	"name": "@minhlucvan/n8n-nodes-discord",
 	"version": "0.5.0",
 	"description": "nodes to trigger workflows from Discord or send interactive messages. Uses the components API which allows to create dialogs (e.g. attach buttons and wait for the user to click on them)",
 	"keywords": [
@@ -11,14 +11,14 @@
 		"n8n-community-node-package"
 	],
 	"license": "MIT",
-	"homepage": "https://github.com/hckdotng/n8n-nodes-discord",
+	"homepage": "https://github.com/minhlucvan/n8n-nodes-discord",
 	"author": {
-		"name": "hckdotng",
-		"url": "https://hck.ng"
+		"name": "minhlucvan",
+		"url": "https://minhlucvan.com"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/hckdotng/n8n-nodes-discord.git"
+		"url": "git+https://github.com/minhlucvan/n8n-nodes-discord.git"
 	},
 	"main": "index.js",
 	"scripts": {
