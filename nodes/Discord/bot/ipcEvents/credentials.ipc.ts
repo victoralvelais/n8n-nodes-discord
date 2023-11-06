@@ -15,7 +15,6 @@ export default async function (ipc: typeof Ipc, client: Client) {
         if (data.token && data.clientId) {
 					addLog(`credentials login authenticating`, client);
           state.login = true;
-          client.destroy();
           commands(data.token, data.clientId, client).catch((e) => {
             addLog(`${e}`, client);
           });
