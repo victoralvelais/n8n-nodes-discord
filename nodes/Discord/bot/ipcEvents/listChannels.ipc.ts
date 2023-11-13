@@ -9,7 +9,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
       if (state.ready) {
         const guild = client.guilds.cache.first();
         const channels =
-          guild?.channels.cache.filter((c) => c.type === ChannelType.GuildText) ?? ([] as any);
+          guild?.channels.cache.filter((c) => (c.type === ChannelType.GuildText || c.type === ChannelType.GuildAnnouncement)) ?? ([] as any);
 
         const channelsList = channels.map((channel: GuildBasedChannel) => {
           return {
