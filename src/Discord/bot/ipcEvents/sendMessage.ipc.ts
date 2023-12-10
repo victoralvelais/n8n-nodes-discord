@@ -48,6 +48,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
                     const reg = new RegExp(/data:image\/([a-z]+);base64/gi);
                     let mime = reg.exec(nodeParameters.footerIconUrl) ?? [];
                     const file = new AttachmentBuilder(buffer, { name: `footer.${mime[1]}` });
+                    // @ts-ignore
                     embedFiles.push(file);
                     iconURL = `attachment://footer.${mime[1]}`;
                   }
@@ -62,6 +63,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
                     const reg = new RegExp(/data:image\/([a-z]+);base64/gi);
                     let mime = reg.exec(nodeParameters.imageUrl) ?? [];
                     const file = new AttachmentBuilder(buffer, { name: `image.${mime[1]}` });
+                    // @ts-ignore
                     embedFiles.push(file);
                     embed.setImage(`attachment://image.${mime[1]}`);
                   } else embed.setImage(nodeParameters.imageUrl);
@@ -72,6 +74,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
                     const reg = new RegExp(/data:image\/([a-z]+);base64/gi);
                     let mime = reg.exec(nodeParameters.thumbnailUrl) ?? [];
                     const file = new AttachmentBuilder(buffer, { name: `thumbnail.${mime[1]}` });
+                    // @ts-ignore
                     embedFiles.push(file);
                     embed.setThumbnail(`attachment://thumbnail.${mime[1]}`);
                   } else embed.setThumbnail(nodeParameters.thumbnailUrl);
@@ -83,6 +86,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
                     const reg = new RegExp(/data:image\/([a-z]+);base64/gi);
                     let mime = reg.exec(nodeParameters.authorIconUrl) ?? [];
                     const file = new AttachmentBuilder(buffer, { name: `author.${mime[1]}` });
+                    // @ts-ignore
                     embedFiles.push(file);
                     iconURL = `attachment://author.${mime[1]}`;
                   }
