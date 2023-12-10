@@ -14,9 +14,5 @@
     //"emitDeclarationOnly": true,
     "strictPropertyInitialization": false
   },
-  "include": [
-    "src/**/*"
-    //"src/**/*",
-    //"lib/index.d.ts" // declaration file path
-  ]
+  "include": ["src/**/*"]
 }

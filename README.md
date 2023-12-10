@@ -177,6 +177,7 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
       - **Remove role from user**: Remove a role from a user.
         - **User ID**: User to remove the role from.
         - **Which roles**: Roles to remove from the user.
+
 - **Persitent**: Available for type prompt. If active the button/select will stay visible even when the workflow is done.
   - **Min select**: Available for type select prompt. Minimum number of options that can be selected.
   - **Max select**: Available for type select prompt. Maximum number of options that can be selected.
@@ -192,9 +193,9 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
 
 - **value**: If type button/select prompt, return the value of the user selection.
 - **channelId**: The channel ID where the message is sent.
-- **userId**:  If type button/select prompt, return the ID of the interacting user.
-- **userName**:  If type button/select prompt, return the username of the interacting user.
-- **userTag**:  If type button/select prompt, return the tag of the interacting user.
+- **userId**: If type button/select prompt, return the ID of the interacting user.
+- **userName**: If type button/select prompt, return the username of the interacting user.
+- **userTag**: If type button/select prompt, return the tag of the interacting user.
 - **messageId**: The ID of the sent message.
 - **action**: If type action, return the action performed (at the moment the only available type is removeMessages).
 
