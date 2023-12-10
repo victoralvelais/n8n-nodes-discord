@@ -1,4 +1,4 @@
-import { IExecuteFunctions } from "n8n-core"
+import { IExecuteFunctions } from "n8n-workflow"
 import { INodeExecutionData, INodePropertyOptions, INodeType, INodeTypeDescription } from "n8n-workflow"
 import { options } from "./Discord.node.options"
 import bot from "./bot"

@@ -1,4 +1,4 @@
-import { ITriggerFunctions } from "n8n-core"
+import { ITriggerFunctions } from "n8n-workflow"
 import {
   INodeType,
   INodeTypeDescription,

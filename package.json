@@ -1,6 +1,6 @@
 {
   "name": "@jordanburke/n8n-nodes-discord",
-  "version": "0.5.4-1",
+  "version": "0.5.5",
   "description": "nodes to trigger workflows from Discord or send interactive messages. Uses the components API which allows to create dialogs (e.g. attach buttons and wait for the user to click on them)",
   "keywords": [
     "n8n",
@@ -54,8 +54,8 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "gulp": "^4.0.2",
-    "n8n-core": "^0.125.0",
-    "n8n-workflow": "^0.107.0",
+    "n8n-core": "^1.14.1",
+    "n8n-workflow": "^1.14.1",
     "prettier": "^3.1.1",
     "typescript": "^5.2.2"
   },
