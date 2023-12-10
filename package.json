@@ -26,7 +26,8 @@
     "dev": "tsc --watch",
     "format": "prettier src --write",
     "lint": "tslint -p tsconfig.json -c tslint.json && eslint src src/credentials package.json",
-    "lintfix": "tslint --fix -p tsconfig.json -c tslint.json && eslint src src/credentials package.json --fix"
+    "lintfix": "tslint --fix -p tsconfig.json -c tslint.json && eslint src src/credentials package.json --fix",
+    "publish": "pnpm build && pnpm publish --access public"
   },
   "files": [
     "dist"
