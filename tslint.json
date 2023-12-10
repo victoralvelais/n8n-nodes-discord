@@ -26,7 +26,7 @@
 		"forin": true,
 		"jsdoc-format": true,
 		"label-position": true,
-		"indent": [true, "tabs", 2],
+		"indent": [true, "spaces", 2],
 		"member-access": [true, "no-public"],
 		"new-parens": true,
 		"no-angle-bracket-type-assertion": true,
