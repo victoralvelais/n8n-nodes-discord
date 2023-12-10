@@ -15,7 +15,7 @@ dependencies:
     specifier: ^0.27.2
     version: 0.27.2
   discord.js:
-    specifier: ^14.5.0
+    specifier: ^14.14.1
     version: 14.14.1
   node-ipc:
     specifier: ^11.1.0
