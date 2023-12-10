@@ -7,15 +7,14 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "outDir": "lib",
+    "outDir": "dist",
     "module": "ESNext",
     "skipLibCheck": true,
     "rootDir": "src",
-    "emitDeclarationOnly": true,
+    //"emitDeclarationOnly": true,
     "strictPropertyInitialization": false
   },
   "include": [
-    "src/credentials/**/*",
     "src/**/*"
     //"src/**/*",
     //"lib/index.d.ts" // declaration file path

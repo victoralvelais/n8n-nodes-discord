@@ -1,10 +1,10 @@
 const { src, dest } = require('gulp');
 
 function copyIcons() {
-	src('nodes/**/*.{png,svg}')
-		.pipe(dest('dist/nodes'))
+	src('src/nodes/Discord/**/*.{png,svg}')
+		.pipe(dest('dist/nodes/Discord'))
 
-	return src('credentials/**/*.{png,svg}')
+	return src('src/nodes/Discord/**/*.{png,svg}')
 		.pipe(dest('dist/credentials'));
 }
 
