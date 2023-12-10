@@ -24,7 +24,7 @@
   "scripts": {
     "build": "tsc && gulp",
     "dev": "tsc --watch",
-    "format": "prettier src src/credentials --write",
+    "format": "prettier src --write",
     "lint": "tslint -p tsconfig.json -c tslint.json && eslint src src/credentials package.json",
     "lintfix": "tslint --fix -p tsconfig.json -c tslint.json && eslint src src/credentials package.json --fix"
   },

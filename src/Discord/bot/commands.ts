@@ -5,83 +5,79 @@ import {
   Interaction,
   Client,
   RESTPostAPIApplicationCommandsJSONBody,
-} from 'discord.js';
-import { REST } from '@discordjs/rest';
+} from "discord.js"
+import { REST } from "@discordjs/rest"
 
-const imports = ['clear', 'test', 'logs'];
+const imports = ["clear", "test", "logs"]
 
 const awaitingCommands: Promise<{
-  params: Object;
-  registerCommand: Function;
-  executeCommand: Function;
-}>[] = [];
+  params: Object
+  registerCommand: Function
+  executeCommand: Function
+}>[] = []
 
 imports.forEach((commandName) => {
-  const command = import(`./commands/${commandName}`);
-  awaitingCommands.push(command);
-});
+  const command = import(`./commands/${commandName}`)
+  awaitingCommands.push(command)
+})
 
 export const registerCommands = async (
   token: string,
   clientId: string,
   triggerCommands?: RESTPostAPIApplicationCommandsJSONBody[],
 ) => {
-  console.log('registering commands');
-  const commands = await Promise.all(awaitingCommands).catch((e) => e);
+  console.log("registering commands")
+  const commands = await Promise.all(awaitingCommands).catch((e) => e)
 
   // commands deployment
-  const rest = new REST({ version: '10' }).setToken(token);
+  const rest = new REST({ version: "10" }).setToken(token)
 
   const parsedCommands = commands.map((e: any) => {
-    return e.default.registerCommand().toJSON();
-  });
-  if (triggerCommands) parsedCommands.push(...triggerCommands);
+    return e.default.registerCommand().toJSON()
+  })
+  if (triggerCommands) parsedCommands.push(...triggerCommands)
 
   rest
     .put(Routes.applicationCommands(clientId), {
       body: parsedCommands,
     })
-    .catch(console.error);
+    .catch(console.error)
 
-  return commands;
-};
+  return commands
+}
 
 export default async function (token: string, clientId: string, client: Client) {
-  const commands = await registerCommands(token, clientId);
+  const commands = await registerCommands(token, clientId)
 
   // commands execution
-  client.on('interactionCreate', async (interaction: Interaction) => {
+  client.on("interactionCreate", async (interaction: Interaction) => {
     try {
-      if (!interaction.isChatInputCommand()) return;
+      if (!interaction.isChatInputCommand()) return
       if (!interaction.guildId) {
-        interaction.reply({ content: 'Commands work only inside channels' });
-        return;
+        interaction.reply({ content: "Commands work only inside channels" })
+        return
       }
 
-      const member = interaction.member as GuildMember;
-      if (!member.permissions.has('ADMINISTRATOR' as PermissionResolvable)) return;
+      const member = interaction.member as GuildMember
+      if (!member.permissions.has("ADMINISTRATOR" as PermissionResolvable)) return
 
-      const { commandName, options } = interaction;
+      const { commandName, options } = interaction
 
-      const i = imports.indexOf(commandName);
-      if (i === -1) return;
+      const i = imports.indexOf(commandName)
+      if (i === -1) return
 
-      const command = commands[i].default;
+      const command = commands[i].default
 
-      const reply = await command
-        .executeCommand(options.get('input')?.value, interaction)
-        .catch((e: any) => e);
-      const botReply = await interaction
-        .reply({ content: reply, fetchReply: true })
-        .catch((e) => e);
+      const reply = await command.executeCommand(options.get("input")?.value, interaction).catch((e: any) => e)
+      const botReply = await interaction.reply({ content: reply, fetchReply: true }).catch((e) => e)
 
-      if (command.params.autoRemove || reply === 'Done!') {
+      if (command.params.autoRemove || reply === "Done!") {
         setTimeout(async () => {
-          botReply.delete().catch((e: any) => console.log(e));
-        }, 2000);
+          botReply.delete().catch((e: any) => console.log(e))
+        }, 2000)
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  });
+  })
 }
