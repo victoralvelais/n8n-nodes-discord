@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "target": "ESNext",
-    "lib": ["esnext", "dom"],
     "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2019",
+    "lib": ["es2019", "es2020", "es2022.error"],
+    "removeComments": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
