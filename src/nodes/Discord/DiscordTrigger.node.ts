@@ -1,4 +1,3 @@
-import { ITriggerFunctions } from "n8n-workflow"
 import {
   INodeType,
   INodeTypeDescription,
@@ -7,6 +6,7 @@ import {
   INodePropertyOptions,
   IExecuteFunctions,
   INodeExecutionData,
+  ITriggerFunctions
 } from "n8n-workflow"
 import ipc from "node-ipc"
 import { Attachment } from "discord.js"
