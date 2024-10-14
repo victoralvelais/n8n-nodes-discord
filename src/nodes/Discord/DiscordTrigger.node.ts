@@ -124,6 +124,7 @@ export class DiscordTrigger implements INodeType {
     const messageId = input[0].json?.messageId as string
     const content = input[0].json?.content as string
     const presence = input[0].json?.presence as string
+    const nickname = input[0].json?.nickname as string
     const addedRoles = input[0].json?.addedRoles as string
     const removedRoles = input[0].json?.removedRoles as string
     const interactionMessageId = input[0].json?.interactionMessageId as string
@@ -144,6 +145,7 @@ export class DiscordTrigger implements INodeType {
         userTag,
         messageId,
         presence,
+        nickname,
         addedRoles,
         removedRoles,
         interactionMessageId,
