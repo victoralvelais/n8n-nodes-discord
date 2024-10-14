@@ -6,7 +6,7 @@ import state from "../state"
 export default async function (client: Client) {
   client.on("guildMemberRemove", (member) => {
     try {
-      if (member.user.bot || member.user.system) return
+      if (member.user.system) return
       const userRoles = member.roles.cache.map((role) => role.id)
       Object.keys(state.channels).forEach((key) => {
         const channel = state.channels[key]
