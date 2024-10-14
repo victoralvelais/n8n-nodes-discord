@@ -6,7 +6,7 @@ import state from "../state"
 export default async function (client: Client) {
   client.on("guildMemberAdd", (member) => {
     try {
-      if (member.user.bot || member.user.system) return
+      if (member.user.system) return
       Object.keys(state.channels).forEach((key) => {
         const channel = state.channels[key]
         channel.forEach(async (trigger) => {

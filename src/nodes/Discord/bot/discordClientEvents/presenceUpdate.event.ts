@@ -7,7 +7,7 @@ export default async function (client: Client) {
   client.on("presenceUpdate", (oldPresence, newPresence) => {
     const member = newPresence.member
     try {
-      if (!member || member.user.bot || member.user.system) return
+      if (!member || member.user.system) return
       const userRoles = member.roles.cache.map((role) => role.id)
       Object.keys(state.channels).forEach((key) => {
         const channel = state.channels[key]
