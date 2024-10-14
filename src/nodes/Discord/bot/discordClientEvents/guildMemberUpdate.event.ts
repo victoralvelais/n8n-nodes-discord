@@ -6,7 +6,7 @@ import state from "../state"
 export default async function (client: Client) {
   client.on("guildMemberUpdate", (oldMember, member) => {
     try {
-      if (!member || member.user.bot || member.user.system) return
+      if (!member || member.user.system) return
       const previousUserRoles = oldMember.roles.cache.map((role) => role.id)
       const currentUserRoles = member.roles.cache.map((role) => role.id)
       const addedRoles = currentUserRoles.filter((role) => !previousUserRoles.includes(role))
