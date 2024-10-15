@@ -31,7 +31,8 @@
   "plugins": [
     "@typescript-eslint",
     "simple-import-sort",
-    "prettier"
+    "prettier",
+    "eslint-plugin-n8n-nodes-base"
   ],
   "rules": {
     "prettier/prettier": [
@@ -44,6 +45,8 @@
     "@typescript-eslint/no-unused-vars": "off", // Certain methods need to match but cannot
     "@typescript-eslint/explicit-function-return-type": "off",
     "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "n8n-nodes-base/node-param-array-type-assertion": "warn",
+    "n8n-nodes-base/node-param-default-wrong-for-collection": "error"
   }
 }

@@ -4,6 +4,7 @@ import {
   INodePropertyOptions,
   INodeType,
   INodeTypeDescription,
+  NodeConnectionType,
 } from "n8n-workflow"
 import { options } from "./Discord.node.options"
 import bot from "./bot"
@@ -28,8 +29,8 @@ const nodeDescription: INodeTypeDescription = {
     name: "Discord Send",
   },
   icon: "file:discord.svg",
-  inputs: ["main"],
-  outputs: ["main"],
+  inputs: [NodeConnectionType.Main],
+  outputs: [NodeConnectionType.Main],
   credentials: [
     {
       name: "discordApi",

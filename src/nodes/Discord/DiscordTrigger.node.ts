@@ -6,7 +6,8 @@ import {
   INodePropertyOptions,
   IExecuteFunctions,
   INodeExecutionData,
-  ITriggerFunctions
+  ITriggerFunctions,
+  NodeConnectionType
 } from "n8n-workflow"
 import ipc from "node-ipc"
 import { Attachment } from "discord.js"
@@ -33,7 +34,7 @@ const nodeDescription: INodeTypeDescription = {
     name: "Discord Trigger",
   },
   inputs: [],
-  outputs: ["main"],
+  outputs: [NodeConnectionType.Main],
   credentials: [
     {
       name: "discordApi",
