@@ -9,6 +9,7 @@ import {
   MessageEditOptions,
   MessageCreateOptions,
   SelectMenuComponentOptionData,
+  TextChannel,
 } from "discord.js"
 import { addLog, pollingPromptData, execution, placeholderLoading } from "../helpers"
 import state from "../state"
@@ -38,7 +39,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
               ipc.server.emit(socket, "send:prompt", state.promptData[message.id])
               delete state.promptData[message.id]
               if (nodeParameters.placeholder) {
-                const message = await channel.send({ content: nodeParameters.placeholder }).catch((e: any) => e)
+                const message = await (channel as TextChannel).send({ content: nodeParameters.placeholder }).catch((e: any) => e)
                 await execution(
                   nodeParameters.executionId,
                   message.id,
@@ -137,7 +138,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 })
               }
             } else {
-              message = await channel.send(sendObject as MessageCreateOptions).catch((e: any) => {
+              message = await (channel as TextChannel).send(sendObject as MessageCreateOptions).catch((e: any) => {
                 addLog(`${e}`, client)
               })
             }

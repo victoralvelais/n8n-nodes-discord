@@ -1,5 +1,5 @@
 import Ipc from "node-ipc"
-import { Client, Channel, Message, EmbedBuilder, ColorResolvable, AttachmentBuilder } from "discord.js"
+import { Client, Channel, Message, EmbedBuilder, ColorResolvable, AttachmentBuilder, TextChannel } from "discord.js"
 import { addLog } from "../helpers"
 import state from "../state"
 import { IDiscordNodeMessageParameters } from "../../Discord.node"
@@ -153,7 +153,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 }
               }
             }
-            const message = (await channel.send(sendObject).catch((e: any) => {
+            const message = (await (channel as TextChannel).send(sendObject).catch((e: any) => {
               addLog(`${e}`, client)
             })) as Message
             ipc.server.emit(socket, "send:message", { channelId, messageId: message.id })

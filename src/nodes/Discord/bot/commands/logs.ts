@@ -1,4 +1,4 @@
-import { Interaction, SlashCommandBuilder, SlashCommandStringOption } from "discord.js"
+import { ChannelType, Interaction, SlashCommandBuilder, SlashCommandStringOption } from "discord.js"
 import state from "../state"
 
 const name = "logs"
@@ -29,8 +29,11 @@ export default {
         const logs = state.logs.slice(-parseInt(param ?? 100))
         logs.forEach((log) => {
           content += "**" + log + "**\n"
-        })
-        interaction.channel?.send(content)
+        });
+        
+        if (interaction.channel?.type === ChannelType.GuildText){
+          interaction.channel?.send(content)
+        }
         return "Logs:"
       }
     } else if (["auto", "stop"].includes(param)) {
