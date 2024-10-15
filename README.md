@@ -66,8 +66,8 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
 
 ## Discord Trigger Node Reference
 
-- **Credential for Discord App**: If you followed the bot setup guide above, you will be able to select your Discord App credentials to start the bot. If you are already another Discord Trigger (or Send) node, be careful to select the same credentials. It's not meant at the moment to be used with multiple Discord Server.
-- **Listen to**: Let you select the text channels you want to listen to for triggering the workflow. If none selected, all channels will be listen to. Your credentials must be set and the bot running, you also need at least one text channel available. If you do not meet these requirements, make the changes then close and reopen the modal (the channels list is loaded when the modal opens). For "User" trigger types, if you want to use a placeholder, select the channel where you want it displayed.
+- **Credential for Discord App**: If you follow the bot setup guide above, you will be able to select your Discord App credentials to start the bot. If you are already another Discord Trigger (or Send) node, be careful to select the same credentials. It's not meant at the moment to be used with multiple Discord servers.
+- **Listen to**: Let you select the text channels you want to listen to for triggering the workflow. If none are selected, all channels will be listened to. Your credentials must be set and the bot running, you also need at least one text channel available. If you do not meet these requirements, make the changes then close and reopen the modal (the channels list is loaded when the modal opens). For "User" trigger types, if you want to use a placeholder, select the channel where you want it displayed.
 - **From roles**: The same logic apply here for roles, except it is optional. If you don't select any role it will listen to **@everyone**.
 - **Trigger type**: Type of event to listen to. User events must specify a channel to listen to if you want to use a placeholder or the option "send to the trigger channel" in a Discord Send node.
   - **Message**: Listen to messages sent in the selected channels.
@@ -75,7 +75,8 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
   - **Interaction**: Listen to persisted button/select.
   - **User joins**: Listen to users joining the server.
   - **User leaves**: Listen to users leaving the server.
-  - **User presence udpate**: Listen to users presence change.
+  - **User presence update**: Listen to users presence change.
+  - **User nickname updated**: Listen to users nickname change.
   - **User role added**: Listen to users role added.
   - **User role removed**: Listen to users role removed.
 - **Presence**: If trigger type presence update. Type of presence to listen to.
@@ -86,8 +87,8 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
   - **Idle**: When a user presence is set to idle.
 - **From roles**: When listening to user role update, select which removed or added role needs to be matched.
 - **Message ID**: If trigger type interaction. The message ID of the button/select to listen to.
-- **Pattern**: Message only. Select how the value below will be recognized. ⚠ Keep in mind that the value will be tested with all mentions removed and a trim applied (whitespaces removed at the beginning and at the end). For example `@bot hello` will be tested on `hello`.
-  - **Equals**: Match the exact same value.
+- **Pattern**: Message only. Select how the value below will be recognized. ⚠ Keep in mind that the value will be tested with all mentions removed and any trim applied (whitespaces removed at the beginning and the end). For example `@bot hello` will be tested on `hello`.
+  - **Equals**: Match the exact value.
   - **Starts with**: Match the message beginning with the specified value.
   - **Contains**: Match the value in any position in the message.
   - **Ends with**: Match the message ending with the specified value.
@@ -117,18 +118,18 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
 - **nick**: The triggering nick update (if type nick updated).
 - **addedRoles**: The triggering added role (if type role added).
 - **removedRoles**: The triggering removed role (if type role removed).
-- **userRoles**: List of role ids of the triggering user (if trigger type intreaction).
+- **userRoles**: List of role ids of the triggering user (if trigger type interaction).
 - **attachments**: The triggering attachments array (if type message && attachments sent).
 
 ## Discord Send Node Reference
 
-- **Credential for Discord App**: If you followed the bot setup guide above, you will be able to select your Discord App credentials to start the bot. If you are already another Discord Trigger (or Send) node, be careful to select the same credentials. It's not meant at the moment to be used with multiple Discord Server.
+- **Credential for Discord App**: If you follow the bot setup guide above, you will be able to select your Discord App credentials to start the bot. If you are already another Discord Trigger (or Send) node, be careful to select the same credentials. It's not meant at the moment to be used with multiple Discord servers.
 - **Replace the trigger placeholder**: If active, the message produced by this node will replace the previous placeholder set. It can be a placeholder set by the Discord Trigger node or by another Discord Send node.
-- **Send to the trigger channel**: If active, the message produced will be sent to the same channel were the workflow was triggered (but not replace the placeholder if there is one).
+- **Send to the trigger channel**: If active, the message produced will be sent to the same channel where the workflow was triggered (but not replace the placeholder if there is one).
 - **Send to**: Let you specify the text channels where you want to send the message. Your credentials must be set and the bot running, you also need at least one text channel available. If you do not meet these requirements, make the changes then close and reopen the modal (the channels list is loaded when the modal opens).
 - **Type**: Let you choose the type of interaction you want to perform.
 
-  - **Message**: This is the default type, it allows you to send a message without requiering any form of response.
+  - **Message**: This is the default type, it allows you to send a message without requiring any form of response.
     - **Content**: Displayed text message.
     - **Embed**: If active it will enable the creation of rich messages like this: ![](images/embed.png)
       - **Color** (1)
@@ -152,7 +153,7 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
       - **URL or base64**: URL/base64 of the image to attach (png, jpg).
   - **Button Prompt**: It allows you to send an interactive dialog along with buttons users can click on. The workflow execution will wait untill someone answer.
     - **Content**: Displayed text message.
-    - **Buttons**: Discord allows to add up to 5 buttons.
+    - **Buttons**: Discord allows you to add up to 5 buttons.
       - **Button**
         - **Label**: Displayed label on the button.
         - **Value**: Value returned by the node if clicked.
@@ -160,18 +161,18 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
     - **Timeout**: Time (seconds) your workflow will wait until it passes to the next node (or stops the execution). The time left will be displayed and updated at the end of the text message. If the timeout is equal 0, it will wait indefinitely.
     - **Restrict to triggering user**: Only the user triggering the workflow will be able to interact (others will be ignored).
     - **Restrict to mentioned roles**: Only the user having one of the mentioned roles will be able to interact (others will be ignored).
-  - **Select Prompt**: Same as button prompt, but it will display dropdown list instead of buttons.
+  - **Select Prompt**: Same as button prompt, but it will display a dropdown list instead of buttons.
     - **Content**: Displayed text message.
     - **Select**
       - **Option**
         - **Label**: Displayed label on the option.
         - **Description**: Optional displayed description.
         - **Value**: Value returned by the node if selected.
-    - Other parameters are the same as for button prompt.
+    - Other parameters are the same as for the button prompt.
   - **Action**: Instead of sending a message, it will perform an action defined in the next field.
     - **Action**: Let you choose the type of action you want to perform. More types will be added in the future.
-      - **Remove messages**: Remove last messages from the "send to" channel.
-        - **How many?**: Number of last messages to remove (Discord API allow max 150 and messages < 4 weeks old).
+      - **Remove messages**: Remove the last [number] of messages from the "Send to" channel.
+        - **How many?**: Number of last messages to remove (Discord API allows max 150 and messages < 4 weeks old).
       - **Add role to user**: Add a role to a user.
         - **User ID**: User to add the role to.
         - **Which roles**: Roles to add to the user.
@@ -179,13 +180,13 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
         - **User ID**: User to remove the role from.
         - **Which roles**: Roles to remove from the user.
 
-- **Persitent**: Available for type prompt. If active the button/select will stay visible even when the workflow is done.
+- **Persistent**: Available for type prompt. If active the button/select will stay visible even when the workflow is done.
   - **Min select**: Available for type select prompt. Minimum number of options that can be selected.
   - **Max select**: Available for type select prompt. Maximum number of options that can be selected.
   - **Message ID**: If you want to edit a previous prompt message intsead of create a new one, you can specify the message ID.
 - **Mention roles**: Let you specify roles you want to mention in the message. Your credentials must be set and the bot running, you also need at least one role (apart from @everyone) available. If you do not meet these requirements, make the changes then close and reopen the modal.
 - **Placeholder**: Not available for simple messages. The placeholder is a message that will appear in the channel where the button or select prompt is displayed. Three animated dots added to the placeholder indicate that the workflow is running. From another Discord Send node, you can set up a response message which will then take the place of this placeholder.
-- **Bot customizaion**: Active this option to customize the bot activity and status.
+- **Bot customization**: Active this option to customize the bot activity and status.
   - **Bot activity**: When you set a bot activity, it will be displayed in the "Now Playing" section of the bot profile. You need to refresh the activity periodically if you want to keep it.
   - **Bot activity type**: Let you customize the type of activity displayed on the bot profile.
   - **Bot status**: Let you customize the status of the bot (if a bot activity is also set).
@@ -206,14 +207,14 @@ To help you create and debug your workflow with Discord Trigger/Send nodes, some
 
 - `/logs`: Display the last logs stored in memory (max 100).
   - **With parameters**
-    - `/logs 10`: If you specify a number, it will display the number amount last logs.
+    - `/logs 10`: If you specify a number, it will display the last [number] of logs.
     - `/logs clear`: Remove all logs in memory.
     - `/logs on`: Logs are automatically sent in the current channel.
-    - `/logs off`: Disable logs automatically sent in the channel.
-- `/clear`: Remove last (max 100) messages in the current channel.
+    - `/logs off`: Disable logs being automatically sent in the channel.
+- `/clear`: Remove the last [number (max 100)] messages in the current channel.
   - **With parameters**
-    - `/clear 10`: If you specify a number, it will remove the number amount last messages.
-- `/test`: Toggle the test mode. Test mode switch the Discord bot on the trigger test url. Useful if you want to see how a workflow is executed and data are passed. Once the test mode is activated, go to the Discord Trigger UI and click on **Fetch Test Event** then on Discord send a message to trigger the workflow.
+    - `/clear 10`: If you specify a number, it will remove the last [number] of messages.
+- `/test`: Toggle the test mode. Test mode switch the Discord bot on the trigger test url. Useful if you want to see how a workflow is executed and data is passed. Once the test mode is activated, go to the Discord Trigger UI and click on **Fetch Test Event** then on Discord send a message to trigger the workflow.
   - **With parameters**
     - `/test true`: Activate the test mode.
     - `/test false`: Disable the test mode.
