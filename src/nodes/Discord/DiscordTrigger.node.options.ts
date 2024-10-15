@@ -24,7 +24,7 @@ export const options: INodeProperties[] = [
           "command",
           "userLeaves",
           "userPresenceUpdate",
-          "userNicknameUpdated",
+          "userNickUpdated",
           "userRoleAdded",
           "userRoleRemoved",
           "interaction",
@@ -74,9 +74,9 @@ export const options: INodeProperties[] = [
         description: "When a user presence is updated.",
       },
       {
-        name: "User nickname updated",
-        value: "userNicknameUpdated",
-        description: "When a user's nickname is updated.",
+        name: "User nick updated",
+        value: "userNickUpdated",
+        description: "When a user's nick is updated.",
       },
       {
         name: "User role added",

@@ -12,9 +12,9 @@ export default async function (client: Client) {
       const addedRoles = currentUserRoles.filter((role) => !previousUserRoles.includes(role))
       const removedRoles = previousUserRoles.filter((role) => !currentUserRoles.includes(role))
 
-      const previousNickname = oldMember?.nickname || null
-      const currentNickname = member?.nickname || null
-      const nicknameChanged = previousNickname !== currentNickname
+      const previousNick = oldMember?.nickname || ''
+      const currentNick = member?.nickname || ''
+      const nickChanged = previousNick !== currentNick
 
       if (addedRoles.length || removedRoles.length) {
         Object.keys(state.channels).forEach((key) => {
@@ -63,26 +63,33 @@ export default async function (client: Client) {
         })
       }
 
-      if (nicknameChanged && trigger.type === "userNicknameUpdated") {
-        addLog(`triggerWorkflow ${trigger.webhookId}`, client)
-        const placeholderMatchingId = trigger.placeholder ? uid() : ""
-        const isEnabled = await triggerWorkflow(
-          trigger.webhookId,
-          null,
-          placeholderMatchingId,
-          state.baseUrl,
-          member.user,
-          key,
-          undefined,
-          currentNickname,
-        ).catch((e) => e)
-        if (isEnabled && trigger.placeholder) {
-          const channel = client.channels.cache.get(key)
-          const placeholder = await (channel as TextChannel)
-            .send(trigger.placeholder)
-            .catch((e: any) => addLog(`${e}`, client))
-          if (placeholder) placeholderLoading(placeholder, placeholderMatchingId, trigger.placeholder)
-        }
+      if (nickChanged) {
+        Object.keys(state.channels).forEach((key) => {
+          const channel = state.channels[key]
+          channel.forEach(async (trigger) => {
+          if (trigger.type === "userNickUpdated") {
+            addLog(`triggerWorkflow ${trigger.webhookId}`, client)
+            const placeholderMatchingId = trigger.placeholder ? uid() : ""
+            const isEnabled = await triggerWorkflow(
+              trigger.webhookId,
+              null,
+              placeholderMatchingId,
+              state.baseUrl,
+              member.user,
+              key,
+              undefined,
+              currentNick,
+            ).catch((e) => e)
+            if (isEnabled && trigger.placeholder) {
+              const channel = client.channels.cache.get(key)
+              const placeholder = await (channel as TextChannel)
+                .send(trigger.placeholder)
+                .catch((e: any) => addLog(`${e}`, client))
+              if (placeholder) placeholderLoading(placeholder, placeholderMatchingId, trigger.placeholder)
+            }
+          }
+          })
+        })
       }
     } catch (e) {
       addLog(`${e}`, client)
