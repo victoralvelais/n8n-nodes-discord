@@ -4,7 +4,7 @@ export class DiscordApi implements ICredentialType {
   name = "discordApi"
   // eslint-disable-next-line n8n-nodes-base/cred-class-field-display-name-missing-api
   displayName = "Discord App"
-  documentationUrl = "https://github.com/hckdotng/n8n-nodes-discord"
+  documentationUrl = "https://github.com/kmcbride3/n8n-nodes-discord"
   properties: INodeProperties[] = [
     {
       displayName: "Client ID",

@@ -114,7 +114,7 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
 - **interactionValues**: The triggering interaction values (if type interaction).
 - **messageId**: The triggering message ID (if type message).
 - **presence**: The triggering presence status (if type presence update).
-- **nickname**: The triggering nickname update (if type nickname updated).
+- **nick**: The triggering nick update (if type nick updated).
 - **addedRoles**: The triggering added role (if type role added).
 - **removedRoles**: The triggering removed role (if type role removed).
 - **userRoles**: List of role ids of the triggering user (if trigger type intreaction).

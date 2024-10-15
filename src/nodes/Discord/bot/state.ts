@@ -24,6 +24,7 @@ const state: {
       placeholder?: string
       active: boolean
       presence?: string
+      nick?: string
       interactionMessageId?: string
     }
   }
@@ -45,6 +46,7 @@ const state: {
         botMention?: boolean
         placeholder?: string
         presence?: string
+        nick?: string
         interactionMessageId?: string
       },
     ]
