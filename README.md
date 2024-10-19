@@ -71,6 +71,7 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
 - **From roles**: The same logic apply here for roles, except it is optional. If you don't select any role it will listen to **@everyone**.
 - **Trigger type**: Type of event to listen to. User events must specify a channel to listen to if you want to use a placeholder or the option "send to the trigger channel" in a Discord Send node.
   - **Message**: Listen to messages sent in the selected channels.
+  - **Thread**: Listen to threads created in the selected channels.
   - **Command**: Listen to commands sent in the selected channels.
   - **Interaction**: Listen to persisted button/select.
   - **User joins**: Listen to users joining the server.
@@ -87,15 +88,15 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
   - **Idle**: When a user presence is set to idle.
 - **From roles**: When listening to user role update, select which removed or added role needs to be matched.
 - **Message ID**: If trigger type interaction. The message ID of the button/select to listen to.
-- **Pattern**: Message only. Select how the value below will be recognized. ⚠ Keep in mind that the value will be tested with all mentions removed and any trim applied (whitespaces removed at the beginning and the end). For example `@bot hello` will be tested on `hello`.
+- **Pattern**: Message/thread only. Select how the value below will be recognized. ⚠ Keep in mind that the value will be tested with all mentions removed and any trim applied (whitespaces removed at the beginning and the end). For example `@bot hello` will be tested on `hello`.
   - **Equals**: Match the exact value.
   - **Starts with**: Match the message beginning with the specified value.
   - **Contains**: Match the value in any position in the message.
   - **Ends with**: Match the message ending with the specified value.
   - **Regex**: Match the custom ECMAScript regex provided.
-- **Value**: Message only. The value you will test on all messages listened to.
-- **Case Sensitive**: Message only. Determine if it will be sensible to the case when matching the value.
-- **Bot mention**: Message only. If true, a message will also need to mention the bot to trigger the workflow (this does not exclude the other criteria).
+- **Value**: Message/thread only. The value you will test on all messages listened to.
+- **Case Sensitive**: Message/thread only. Determine if it will be sensible to the case when matching the value.
+- **Bot mention**: Message/thread only. If true, a message will also need to mention the bot to trigger the workflow (this does not exclude the other criteria).
 - **Name**: Command only. The name of the command to listen to.
 - **Description**: Command only. The description of the command to listen to.
 - **Input field type**: Command only. The type of the input field.
@@ -108,6 +109,7 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
 ### Returned data
 
 - **content**: The triggering message content (if type message).
+- **thread**: The triggering thread (if type thread).
 - **channelId**: The triggering channel ID.
 - **userId**: The triggering user ID.
 - **userName**: The triggering username.

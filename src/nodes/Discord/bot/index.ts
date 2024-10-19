@@ -15,6 +15,7 @@ import guildMemberUpdateEvent from "./discordClientEvents/guildMemberUpdate.even
 import guildMemberAddEvent from "./discordClientEvents/guildMemberAdd.event"
 import guildMemberRemoveEvent from "./discordClientEvents/guildMemberRemove.event"
 import messageCreateEvent from "./discordClientEvents/messageCreate.event"
+import threadCreateEvent from "./discordClientEvents/threadCreate.event"
 import interactionCreateEventUI from "./discordClientEvents/interactionCreateUI.event"
 import interactionCreateEventCmd from "./discordClientEvents/interactionCreateCmd.event"
 
@@ -53,6 +54,9 @@ export default function () {
 
   // the bot listen to all messages and check if it matches a referenced trigger
   messageCreateEvent(client)
+
+  // the bot listen to all threads and check if it matches a referenced trigger
+  threadCreateEvent(client)
 
   // the bot listen to all interactions (button/select) and check if it matches a waiting prompt
   interactionCreateEventUI(client)

@@ -21,6 +21,7 @@ export const options: INodeProperties[] = [
       show: {
         type: [
           "message",
+          "thread",
           "command",
           "userLeaves",
           "userPresenceUpdate",
@@ -47,6 +48,11 @@ export const options: INodeProperties[] = [
         name: "Message",
         value: "message",
         description: "When a message is sent in the selected channels.",
+      },
+      {
+        name: "Thread",
+        value: "thread",
+        description: "When a thread is created in the selected channels.",
       },
       {
         name: "Command",
@@ -155,7 +161,7 @@ export const options: INodeProperties[] = [
     type: "options",
     displayOptions: {
       show: {
-        type: ["message"],
+        type: ["message, thread"],
       },
     },
     options: [
@@ -194,7 +200,7 @@ export const options: INodeProperties[] = [
     type: "string",
     displayOptions: {
       show: {
-        type: ["message"],
+        type: ["message, thread"],
       },
     },
     required: true,
@@ -301,7 +307,7 @@ export const options: INodeProperties[] = [
     type: "boolean",
     displayOptions: {
       show: {
-        type: ["message"],
+        type: ["message, thread"],
       },
     },
     required: false,
@@ -314,7 +320,7 @@ export const options: INodeProperties[] = [
     type: "boolean",
     displayOptions: {
       show: {
-        type: ["message"],
+        type: ["message, thread"],
       },
     },
     required: false,
