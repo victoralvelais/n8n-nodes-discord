@@ -1,4 +1,5 @@
-import { Interaction, SlashCommandBuilder, TextChannel, SlashCommandIntegerOption } from "discord.js"
+import { SlashCommandBuilder, SlashCommandIntegerOption } from "@discordjs/builders"
+import { Interaction, TextChannel } from "discord.js"
 
 const name = "clear"
 

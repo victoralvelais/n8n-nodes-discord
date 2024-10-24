@@ -1,6 +1,7 @@
-import { Client, TextChannel, GuildMemberRoleManager } from "discord.js"
+import { Client, GuildMemberRoleManager, TextChannel } from "discord.js"
 import { uid } from "uid"
-import { addLog, triggerWorkflow, placeholderLoading } from "../helpers"
+
+import { addLog, placeholderLoading, triggerWorkflow } from "../helpers"
 import state from "../state"
 
 export default async function (client: Client) {

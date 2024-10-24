@@ -102,7 +102,7 @@ export const options: INodeProperties[] = [
       {
         name: "Remove messages",
         value: "removeMessages",
-        description: "Remove last messages from the \"send to\" channel.",
+        description: 'Remove last messages from the "send to" channel.',
       },
       {
         name: "Add role to user",
@@ -726,7 +726,7 @@ export const options: INodeProperties[] = [
     },
     default: "",
     description:
-      "When you set a bot activity, it will be displayed in the \"Now Playing\" section of the bot profile. You need to refresh the activity periodically if you want to keep it.",
+      'When you set a bot activity, it will be displayed in the "Now Playing" section of the bot profile. You need to refresh the activity periodically if you want to keep it.',
   },
   {
     displayName: "Bot activity type",

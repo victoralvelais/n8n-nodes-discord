@@ -1,19 +1,20 @@
-import Ipc from "node-ipc"
 import {
-  Client,
-  Channel,
-  Message,
   ActionRowBuilder,
-  SelectMenuBuilder,
   ButtonBuilder,
-  MessageEditOptions,
+  Channel,
+  Client,
+  Message,
   MessageCreateOptions,
+  MessageEditOptions,
+  SelectMenuBuilder,
   SelectMenuComponentOptionData,
   TextChannel,
 } from "discord.js"
-import { addLog, pollingPromptData, execution, placeholderLoading } from "../helpers"
-import state from "../state"
+import Ipc from "node-ipc"
+
 import { IDiscordNodePromptParameters } from "../../Discord.node"
+import { addLog, execution, placeholderLoading, pollingPromptData } from "../helpers"
+import state from "../state"
 
 export default async function (ipc: typeof Ipc, client: Client) {
   ipc.server.on("send:prompt", async (nodeParameters: IDiscordNodePromptParameters, socket: any) => {
@@ -39,7 +40,9 @@ export default async function (ipc: typeof Ipc, client: Client) {
               ipc.server.emit(socket, "send:prompt", state.promptData[message.id])
               delete state.promptData[message.id]
               if (nodeParameters.placeholder) {
-                const message = await (channel as TextChannel).send({ content: nodeParameters.placeholder }).catch((e: any) => e)
+                const message = await (channel as TextChannel)
+                  .send({ content: nodeParameters.placeholder })
+                  .catch((e: any) => e)
                 await execution(
                   nodeParameters.executionId,
                   message.id,

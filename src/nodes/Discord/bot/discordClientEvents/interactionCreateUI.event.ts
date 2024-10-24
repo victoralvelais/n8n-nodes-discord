@@ -1,6 +1,7 @@
-import { Client, TextChannel, ComponentType, GuildMemberRoleManager } from "discord.js"
+import { Client, ComponentType, GuildMemberRoleManager, TextChannel } from "discord.js"
 import { uid } from "uid"
-import { addLog, triggerWorkflow, placeholderLoading } from "../helpers"
+
+import { addLog, placeholderLoading, triggerWorkflow } from "../helpers"
 import state from "../state"
 
 export default async function (client: Client) {
@@ -49,7 +50,7 @@ export default async function (client: Client) {
                   if (element.label) labels.push(element.label)
                 } else if (element.type === ComponentType.SelectMenu) {
                   element.options.forEach((option) => {
-                    // @ts-ignore
+                    // @ts-expect-error legacy declaration
                     if (interaction.values.includes(option.value)) labels.push(option.label)
                   })
                 }

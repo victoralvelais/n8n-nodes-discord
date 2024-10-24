@@ -161,7 +161,7 @@ export const options: INodeProperties[] = [
     type: "options",
     displayOptions: {
       show: {
-        type: ["message, thread"],
+        type: ["message", "thread"],
       },
     },
     options: [
@@ -200,7 +200,7 @@ export const options: INodeProperties[] = [
     type: "string",
     displayOptions: {
       show: {
-        type: ["message, thread"],
+        type: ["message", "thread"],
       },
     },
     required: true,
@@ -307,7 +307,7 @@ export const options: INodeProperties[] = [
     type: "boolean",
     displayOptions: {
       show: {
-        type: ["message, thread"],
+        type: ["message", "thread"],
       },
     },
     required: false,
@@ -320,7 +320,7 @@ export const options: INodeProperties[] = [
     type: "boolean",
     displayOptions: {
       show: {
-        type: ["message, thread"],
+        type: ["message", "thread"],
       },
     },
     required: false,

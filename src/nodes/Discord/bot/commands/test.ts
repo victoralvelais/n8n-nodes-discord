@@ -1,4 +1,5 @@
-import { SlashCommandBuilder, SlashCommandBooleanOption } from "discord.js"
+import { SlashCommandBooleanOption, SlashCommandBuilder } from "@discordjs/builders"
+
 import state from "../state"
 
 const name = "test"

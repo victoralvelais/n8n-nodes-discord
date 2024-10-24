@@ -1,24 +1,25 @@
+import { Attachment } from "discord.js"
 import {
-  INodeType,
-  INodeTypeDescription,
-  IWebhookFunctions,
-  IWebhookResponseData,
-  INodePropertyOptions,
   IExecuteFunctions,
   INodeExecutionData,
+  INodePropertyOptions,
+  INodeType,
+  INodeTypeDescription,
   ITriggerFunctions,
-  NodeConnectionType
+  IWebhookFunctions,
+  IWebhookResponseData,
+  NodeConnectionType,
 } from "n8n-workflow"
 import ipc from "node-ipc"
-import { Attachment } from "discord.js"
-import { options } from "./DiscordTrigger.node.options"
+
 import {
   connection,
+  execution,
   getChannels as getChannelsHelper,
   getRoles as getRolesHelper,
-  execution,
   ICredentials,
 } from "./bot/helpers"
+import { options } from "./DiscordTrigger.node.options"
 
 const nodeDescription: INodeTypeDescription = {
   displayName: "Discord Trigger",
@@ -83,7 +84,7 @@ export class DiscordTrigger implements INodeType {
       await connection(credentials).catch((e) => e)
 
       try {
-        const regex = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^\/\n?]+)/gim
+        const regex = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^/\n?]+)/gim
         let match
         while ((match = regex.exec(credentials.baseUrl)) != null) {
           baseUrl = match[0]
@@ -113,7 +114,6 @@ export class DiscordTrigger implements INodeType {
   }
 
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-    // @ts-ignore
     const executionId = this.getExecutionId()
     const input = this.getInputData()
     const credentials = (await this.getCredentials("discordApi")) as any as ICredentials

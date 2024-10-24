@@ -1,16 +1,17 @@
-import Ipc from "node-ipc"
 import {
   Client,
-  SlashCommandBuilder,
-  SlashCommandBooleanOption,
-  SlashCommandStringOption,
   RESTPostAPIApplicationCommandsJSONBody,
-  SlashCommandNumberOption,
+  SlashCommandBooleanOption,
+  SlashCommandBuilder,
   SlashCommandIntegerOption,
+  SlashCommandNumberOption,
+  SlashCommandStringOption,
 } from "discord.js"
+import Ipc from "node-ipc"
+
+import { registerCommands } from "../commands"
 import { addLog } from "../helpers"
 import state from "../state"
-import { registerCommands } from "../commands"
 
 export default async function (ipc: typeof Ipc, client: Client) {
   let timeout: null | NodeJS.Timeout = null

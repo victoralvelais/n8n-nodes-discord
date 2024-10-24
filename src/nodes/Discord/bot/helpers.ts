@@ -1,7 +1,8 @@
-import ipc from "node-ipc"
-import { INodePropertyOptions } from "n8n-workflow"
-import { Client, Message, User } from "discord.js"
 import axios from "axios"
+import { Client, Message, User } from "discord.js"
+import { INodePropertyOptions } from "n8n-workflow"
+import ipc from "node-ipc"
+
 import state from "./state"
 
 export interface ICredentials {

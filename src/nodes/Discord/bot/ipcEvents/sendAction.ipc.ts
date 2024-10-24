@@ -1,8 +1,9 @@
+import { Channel, Client, GuildMember, TextChannel, User } from "discord.js"
 import Ipc from "node-ipc"
-import { Client, Channel, TextChannel, User, GuildMember } from "discord.js"
+
+import { IDiscordNodeActionParameters } from "../../Discord.node"
 import { addLog } from "../helpers"
 import state from "../state"
-import { IDiscordNodeActionParameters } from "../../Discord.node"
 
 export default async function (ipc: typeof Ipc, client: Client) {
   ipc.server.on("send:action", async (nodeParameters: IDiscordNodeActionParameters, socket: any) => {

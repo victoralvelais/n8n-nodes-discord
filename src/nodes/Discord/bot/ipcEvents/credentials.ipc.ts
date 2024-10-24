@@ -1,8 +1,9 @@
-import Ipc from "node-ipc"
 import { Client } from "discord.js"
-import { ICredentials, addLog, withTimeout } from "../helpers"
-import state from "../state"
+import Ipc from "node-ipc"
+
 import commands from "../commands"
+import { addLog, ICredentials, withTimeout } from "../helpers"
+import state from "../state"
 
 export default async function (ipc: typeof Ipc, client: Client) {
   ipc.server.on("credentials", (data: ICredentials, socket: any) => {

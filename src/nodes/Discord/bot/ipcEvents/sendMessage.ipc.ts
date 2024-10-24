@@ -1,8 +1,9 @@
+import { AttachmentBuilder, Channel, Client, ColorResolvable, EmbedBuilder, Message, TextChannel } from "discord.js"
 import Ipc from "node-ipc"
-import { Client, Channel, Message, EmbedBuilder, ColorResolvable, AttachmentBuilder, TextChannel } from "discord.js"
+
+import { IDiscordNodeMessageParameters } from "../../Discord.node"
 import { addLog } from "../helpers"
 import state from "../state"
-import { IDiscordNodeMessageParameters } from "../../Discord.node"
 
 export default async function (ipc: typeof Ipc, client: Client) {
   ipc.server.on("send:message", async (nodeParameters: IDiscordNodeMessageParameters, socket: any) => {
@@ -35,9 +36,9 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 if (iconURL && iconURL.match(/^data:/)) {
                   const buffer = Buffer.from(iconURL.split(",")[1], "base64")
                   const reg = new RegExp(/data:image\/([a-z]+);base64/gi)
-                  let mime = reg.exec(nodeParameters.footerIconUrl) ?? []
+                  const mime = reg.exec(nodeParameters.footerIconUrl) ?? []
                   const file = new AttachmentBuilder(buffer, { name: `footer.${mime[1]}` })
-                  // @ts-ignore
+                  // @ts-expect-error legacy declaration
                   embedFiles.push(file)
                   iconURL = `attachment://footer.${mime[1]}`
                 }
@@ -50,9 +51,9 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 if (nodeParameters.imageUrl.match(/^data:/)) {
                   const buffer = Buffer.from(nodeParameters.imageUrl.split(",")[1], "base64")
                   const reg = new RegExp(/data:image\/([a-z]+);base64/gi)
-                  let mime = reg.exec(nodeParameters.imageUrl) ?? []
+                  const mime = reg.exec(nodeParameters.imageUrl) ?? []
                   const file = new AttachmentBuilder(buffer, { name: `image.${mime[1]}` })
-                  // @ts-ignore
+                  // @ts-expect-error legacy declaration
                   embedFiles.push(file)
                   embed.setImage(`attachment://image.${mime[1]}`)
                 } else embed.setImage(nodeParameters.imageUrl)
@@ -61,9 +62,9 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 if (nodeParameters.thumbnailUrl.match(/^data:/)) {
                   const buffer = Buffer.from(nodeParameters.thumbnailUrl.split(",")[1], "base64")
                   const reg = new RegExp(/data:image\/([a-z]+);base64/gi)
-                  let mime = reg.exec(nodeParameters.thumbnailUrl) ?? []
+                  const mime = reg.exec(nodeParameters.thumbnailUrl) ?? []
                   const file = new AttachmentBuilder(buffer, { name: `thumbnail.${mime[1]}` })
-                  // @ts-ignore
+                  // @ts-expect-error legacy declaration
                   embedFiles.push(file)
                   embed.setThumbnail(`attachment://thumbnail.${mime[1]}`)
                 } else embed.setThumbnail(nodeParameters.thumbnailUrl)
@@ -73,9 +74,9 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 if (iconURL && iconURL.match(/^data:/)) {
                   const buffer = Buffer.from(iconURL.split(",")[1], "base64")
                   const reg = new RegExp(/data:image\/([a-z]+);base64/gi)
-                  let mime = reg.exec(nodeParameters.authorIconUrl) ?? []
+                  const mime = reg.exec(nodeParameters.authorIconUrl) ?? []
                   const file = new AttachmentBuilder(buffer, { name: `author.${mime[1]}` })
-                  // @ts-ignore
+                  // @ts-expect-error legacy declaration
                   embedFiles.push(file)
                   iconURL = `attachment://author.${mime[1]}`
                 }

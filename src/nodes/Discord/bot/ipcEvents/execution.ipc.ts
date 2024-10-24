@@ -1,6 +1,7 @@
-import Ipc from "node-ipc"
-import { Client } from "discord.js"
 import axios from "axios"
+import { Client } from "discord.js"
+import Ipc from "node-ipc"
+
 import { addLog, IExecutionData } from "../helpers"
 import state from "../state"
 

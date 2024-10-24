@@ -6,15 +6,16 @@ import {
   INodeTypeDescription,
   NodeConnectionType,
 } from "n8n-workflow"
-import { options } from "./Discord.node.options"
+
 import bot from "./bot"
 import {
   connection,
   getChannels as getChannelsHelper,
   getRoles as getRolesHelper,
-  ipcRequest,
   ICredentials,
+  ipcRequest,
 } from "./bot/helpers"
+import { options } from "./Discord.node.options"
 
 // we start the bot if we are in the main process
 if (!process.send) bot()
@@ -133,7 +134,6 @@ export class Discord implements INodeType {
   }
 
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-    // @ts-ignore
     const executionId = this.getExecutionId()
     const returnData: INodeExecutionData[] = []
 

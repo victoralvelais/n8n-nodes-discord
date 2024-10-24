@@ -1,5 +1,6 @@
-import Ipc from "node-ipc"
 import { Client, PresenceStatusData } from "discord.js"
+import Ipc from "node-ipc"
+
 import { addLog } from "../helpers"
 import state from "../state"
 

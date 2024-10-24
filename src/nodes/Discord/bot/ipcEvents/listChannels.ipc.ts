@@ -1,5 +1,6 @@
+import { ChannelType, Client, GuildBasedChannel } from "discord.js"
 import Ipc from "node-ipc"
-import { Client, GuildBasedChannel, ChannelType } from "discord.js"
+
 import { addLog } from "../helpers"
 import state from "../state"
 
