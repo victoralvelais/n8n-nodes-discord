@@ -1,97 +1,107 @@
-import path from "node:path"
-import { fileURLToPath } from "node:url"
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { includeIgnoreFile } from '@eslint/compat';
+import js from '@eslint/js';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
+import typescriptEslintParser from '@typescript-eslint/parser';
+import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
+import prettierPlugin from 'eslint-plugin-prettier';
+import n8nNodesBasePlugin from 'eslint-plugin-n8n-nodes-base';
 
-import { includeIgnoreFile } from "@eslint/compat"
-import { FlatCompat } from "@eslint/eslintrc"
-import js from "@eslint/js"
-import typescriptEslint from "@typescript-eslint/eslint-plugin"
-import tsParser from "@typescript-eslint/parser"
-import n8nNodesBase from "eslint-plugin-n8n-nodes-base"
-import prettier from "eslint-plugin-prettier"
-import simpleImportSort from "eslint-plugin-simple-import-sort"
-import globals from "globals"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const gitignorePath = path.resolve(__dirname, ".gitignore")
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-})
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const gitignorePath = path.resolve(__dirname, '.gitignore');
 
 export default [
   includeIgnoreFile(gitignorePath),
   {
-    // your overrides
-  },
-  
-  {
     ignores: [
-      "**/.gitignore",
-      "**/.eslintignore",
-      "**/node_modules",
-      "**/.DS_Store",
-      "**/dist",
-      "**/dist-ssr",
-      "**/*.local",
-      "**/lib",
-      "**/tsconfig.json",
+      'eslint.config.mjs',
+      'gulpfile.mjs',
+      'package.json',
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.gitignore',
+      '**/.DS_Store',
+      '**/dist-ssr',
+      '**/*.local',
+      '**/lib',
+      '**/tsconfig.json',
     ],
   },
-
   {
-    files: ["**/*.ts", "**/*.tsx"]
-
-    // any additional configuration for these file types here
-  },
-
-  ...compat.extends("eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"),
-  {
-    plugins: {
-      "@typescript-eslint": typescriptEslint,
-      "simple-import-sort": simpleImportSort,
-      prettier,
-      "n8n-nodes-base": n8nNodesBase,
-    },
-
+    files: ['src/**/*.ts', 'src/**/*.js', 'src/**/*.mjs'], // Specify the files to lint
     languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
       globals: {
-        ...globals.browser,
-        ...globals.amd,
-        ...globals.node,
+        browser: 'readonly',
+        es6: 'readonly',
+        node: 'readonly',
+        amd: 'readonly',
       },
-
-      parser: tsParser,
-      ecmaVersion: 2020,
-      sourceType: "module",
+      parser: typescriptEslintParser,
+      parserOptions: {
+        project: ['./tsconfig.json'],
+        extraFileExtensions: ['.json'],
+      },
     },
-
     settings: {
-      "import/resolver": {
+      'import/resolver': {
         node: {
-          paths: ["'src'"],
-          extensions: [".js", ".ts"],
+          paths: ['src'],
+          extensions: ['.js', '.ts'],
         },
       },
     },
-
+    plugins: {
+      '@typescript-eslint': typescriptEslintPlugin,
+      'simple-import-sort': simpleImportSortPlugin,
+      'prettier': prettierPlugin,
+      'n8n-nodes-base': n8nNodesBasePlugin
+    },
+  },
+  {
+    ...n8nNodesBasePlugin.configs.community,
+    files: ['package.json'],
+  },
+  {
+    ...n8nNodesBasePlugin.configs.credentials,
+    files: ['./credentials/**/*.ts'],
     rules: {
-      "prettier/prettier": [
-        "error",
+      'n8n-nodes-base/cred-class-field-documentation-url-missing': 'off',
+      'n8n-nodes-base/cred-class-field-documentation-url-miscased': 'off',
+    },
+  },
+  {
+    ...n8nNodesBasePlugin.configs.nodes,
+    files: ['./nodes/**/*.ts'],
+    rules: {
+      'n8n-nodes-base/node-execute-block-missing-continue-on-fail': 'off',
+      'n8n-nodes-base/node-resource-description-filename-against-convention': 'off',
+      'n8n-nodes-base/node-param-fixed-collection-type-unsorted-items': 'off',
+      'n8n-nodes-base/node-execute-block-operation-missing-singular-pairing': 'off',
+      'n8n-nodes-base/node-execute-block-operation-missing-plural-pairing': 'off',
+    },
+  },
+  eslintPluginPrettierRecommended,
+  {
+    rules: {
+      'prettier/prettier': [
+        'error',
         {},
         {
           usePrettierrc: true,
         },
       ],
+      '@typescript-eslint/no-unused-vars': 'warn', // Certain methods need to match but cannot
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'semi': ['error', 'never'], // Add this line to enforce no semicolons
+      '@typescript-eslint/no-explicit-any': 'off', // Ensure this rule is disabled last
 
-      "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error",
-      "n8n-nodes-base/node-param-array-type-assertion": "warn",
-      "n8n-nodes-base/node-param-default-wrong-for-collection": "error",
     },
-},
-]
+  },
+];
