@@ -1,24 +1,24 @@
-import { Client, GatewayIntentBits } from "discord.js"
-import ipc from "node-ipc"
+import { Client, GatewayIntentBits } from 'discord.js'
+import ipc from 'node-ipc'
 
-import guildMemberAddEvent from "./discordClientEvents/guildMemberAdd.event"
-import guildMemberRemoveEvent from "./discordClientEvents/guildMemberRemove.event"
-import guildMemberUpdateEvent from "./discordClientEvents/guildMemberUpdate.event"
-import interactionCreateEventCmd from "./discordClientEvents/interactionCreateCmd.event"
-import interactionCreateEventUI from "./discordClientEvents/interactionCreateUI.event"
-import messageCreateEvent from "./discordClientEvents/messageCreate.event"
-import presenceUpdateEvent from "./discordClientEvents/presenceUpdate.event"
-import threadCreateEvent from "./discordClientEvents/threadCreate.event"
-import { addLog } from "./helpers"
-import botStatusIpc from "./ipcEvents/botStatus.ipc"
-import credentialsIpc from "./ipcEvents/credentials.ipc"
-import executionIpc from "./ipcEvents/execution.ipc"
-import listChannelsIpc from "./ipcEvents/listChannels.ipc"
-import listRolesIpc from "./ipcEvents/listRoles.ipc"
-import sendActionIpc from "./ipcEvents/sendAction.ipc"
-import sendMessageIpc from "./ipcEvents/sendMessage.ipc"
-import sendPromptIpc from "./ipcEvents/sendPrompt.ipc"
-import triggerIpc from "./ipcEvents/trigger.ipc"
+import guildMemberAddEvent from './discordClientEvents/guildMemberAdd.event'
+import guildMemberRemoveEvent from './discordClientEvents/guildMemberRemove.event'
+import guildMemberUpdateEvent from './discordClientEvents/guildMemberUpdate.event'
+import interactionCreateEventCmd from './discordClientEvents/interactionCreateCmd.event'
+import interactionCreateEventUI from './discordClientEvents/interactionCreateUI.event'
+import messageCreateEvent from './discordClientEvents/messageCreate.event'
+import presenceUpdateEvent from './discordClientEvents/presenceUpdate.event'
+import threadCreateEvent from './discordClientEvents/threadCreate.event'
+import { addLog } from './helpers'
+import botStatusIpc from './ipcEvents/botStatus.ipc'
+import credentialsIpc from './ipcEvents/credentials.ipc'
+import executionIpc from './ipcEvents/execution.ipc'
+import listChannelsIpc from './ipcEvents/listChannels.ipc'
+import listRolesIpc from './ipcEvents/listRoles.ipc'
+import sendActionIpc from './ipcEvents/sendAction.ipc'
+import sendMessageIpc from './ipcEvents/sendMessage.ipc'
+import sendPromptIpc from './ipcEvents/sendPrompt.ipc'
+import triggerIpc from './ipcEvents/trigger.ipc'
 
 export default function () {
   const client = new Client({
@@ -33,11 +33,11 @@ export default function () {
       GatewayIntentBits.GuildMessageTyping,
     ],
     allowedMentions: {
-      parse: ["roles", "users", "everyone"],
+      parse: ['roles', 'users', 'everyone'],
     },
   })
 
-  client.on("ready", () => {
+  client.on('ready', () => {
     addLog(`Logged in as ${client.user?.tag}`, client)
   })
 
@@ -65,7 +65,7 @@ export default function () {
   // the bot listen to all interactions (slash commands) and check if it matches a referenced trigger
   interactionCreateEventCmd(client)
 
-  ipc.config.id = "bot"
+  ipc.config.id = 'bot'
   ipc.config.retry = 1500
 
   // nodes are executed in a child process, the Discord bot is executed in the main process

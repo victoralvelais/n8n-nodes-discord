@@ -1,12 +1,12 @@
-import { Client } from "discord.js"
-import Ipc from "node-ipc"
+import { Client } from 'discord.js'
+import Ipc from 'node-ipc'
 
-import commands from "../commands"
-import { addLog, ICredentials, withTimeout } from "../helpers"
-import state from "../state"
+import commands from '../commands'
+import { addLog, ICredentials, withTimeout } from '../helpers'
+import state from '../state'
 
 export default async function (ipc: typeof Ipc, client: Client) {
-  ipc.server.on("credentials", (data: ICredentials, socket: any) => {
+  ipc.server.on('credentials', (data: ICredentials, socket: any) => {
     try {
       addLog(`credentials state login ${state.login}, ready ${state.ready}`, client)
       if (
@@ -25,27 +25,27 @@ export default async function (ipc: typeof Ipc, client: Client) {
               state.login = false
               state.clientId = data.clientId
               state.token = data.token
-              ipc.server.emit(socket, "credentials", "ready")
+              ipc.server.emit(socket, 'credentials', 'ready')
               addLog(`credentials ready`, client)
             })
             .catch((e) => {
               state.login = false
-              ipc.server.emit(socket, "credentials", "error")
-              addLog(`credentials error`, client)
+              ipc.server.emit(socket, 'credentials', 'error')
+              addLog(`credentials error - ${e}`, client)
             })
         } else {
-          ipc.server.emit(socket, "credentials", "missing")
+          ipc.server.emit(socket, 'credentials', 'missing')
           addLog(`credentials missing`, client)
         }
       } else if (state.login) {
-        ipc.server.emit(socket, "credentials", "login")
+        ipc.server.emit(socket, 'credentials', 'login')
         addLog(`credentials login`, client)
       } else {
-        ipc.server.emit(socket, "credentials", "already")
+        ipc.server.emit(socket, 'credentials', 'already')
       }
     } catch (e) {
       state.login = false
-      ipc.server.emit(socket, "credentials", "error")
+      ipc.server.emit(socket, 'credentials', 'error')
       addLog(`${e}`, client)
     }
   })

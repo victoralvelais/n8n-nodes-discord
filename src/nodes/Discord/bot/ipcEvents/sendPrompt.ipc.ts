@@ -9,19 +9,19 @@ import {
   SelectMenuBuilder,
   SelectMenuComponentOptionData,
   TextChannel,
-} from "discord.js"
-import Ipc from "node-ipc"
+} from 'discord.js'
+import Ipc from 'node-ipc'
 
-import { IDiscordNodePromptParameters } from "../../Discord.node"
-import { addLog, execution, placeholderLoading, pollingPromptData } from "../helpers"
-import state from "../state"
+import { IDiscordNodePromptParameters } from '../../Discord.node'
+import { addLog, execution, placeholderLoading, pollingPromptData } from '../helpers'
+import state from '../state'
 
 export default async function (ipc: typeof Ipc, client: Client) {
-  ipc.server.on("send:prompt", async (nodeParameters: IDiscordNodePromptParameters, socket: any) => {
+  ipc.server.on('send:prompt', async (nodeParameters: IDiscordNodePromptParameters, socket: any) => {
     try {
       if (state.ready) {
         const executionMatching = state.executionMatching[nodeParameters.executionId]
-        let channelId: string = ""
+        let channelId: string = ''
         if (nodeParameters.triggerPlaceholder || nodeParameters.triggerChannel) channelId = executionMatching?.channelId
         else channelId = nodeParameters.channelId
 
@@ -37,7 +37,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
               await pollingPromptData(message, nodeParameters.content, nodeParameters.timeout, client).catch((e: any) =>
                 addLog(`${e}`, client),
               )
-              ipc.server.emit(socket, "send:prompt", state.promptData[message.id])
+              ipc.server.emit(socket, 'send:prompt', state.promptData[message.id])
               delete state.promptData[message.id]
               if (nodeParameters.placeholder) {
                 const message = await (channel as TextChannel)
@@ -78,27 +78,27 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 },
               )
               const select = new SelectMenuBuilder()
-                .setCustomId("select")
-                .setPlaceholder("...")
+                .setCustomId('select')
+                .setPlaceholder('...')
                 .setMinValues(nodeParameters.persistent ? nodeParameters.minSelect : 1)
                 .setMaxValues(nodeParameters.persistent ? nodeParameters.maxSelect : 1)
                 .addOptions(options)
               row = new ActionRowBuilder().addComponents(select)
             }
 
-            let mentions = ""
+            let mentions = ''
             if (nodeParameters.mentionRoles) {
               nodeParameters.mentionRoles.forEach((role: string) => {
                 mentions += ` <@&${role}>`
               })
             }
 
-            let content = ""
+            let content = ''
             if (nodeParameters.content) content += nodeParameters.content
             if (mentions) content += mentions
 
             const sendObject = {
-              content: content + (nodeParameters.timeout ? ` (${nodeParameters.timeout}s)` : ""),
+              content: content + (nodeParameters.timeout ? ` (${nodeParameters.timeout}s)` : ''),
               components: [row],
             }
 
@@ -149,7 +149,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
             if (message && message.id && !nodeParameters.persistent) {
               promptProcessing(message)
             } else if (message && message.id && nodeParameters.persistent) {
-              ipc.server.emit(socket, "send:prompt", {
+              ipc.server.emit(socket, 'send:prompt', {
                 channelId: channel.id,
                 messageId: message.id,
               })
@@ -157,12 +157,12 @@ export default async function (ipc: typeof Ipc, client: Client) {
           })
           .catch((e: any) => {
             addLog(`${e}`, client)
-            ipc.server.emit(socket, "send:prompt", false)
+            ipc.server.emit(socket, 'send:prompt', false)
           })
       }
     } catch (e) {
       addLog(`${e}`, client)
-      ipc.server.emit(socket, "send:prompt", false)
+      ipc.server.emit(socket, 'send:prompt', false)
     }
   })
 }

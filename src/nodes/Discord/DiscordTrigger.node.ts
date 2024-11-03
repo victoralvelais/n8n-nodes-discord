@@ -1,4 +1,4 @@
-import { Attachment } from "discord.js"
+import { Attachment } from 'discord.js'
 import {
   IExecuteFunctions,
   INodeExecutionData,
@@ -9,8 +9,8 @@ import {
   IWebhookFunctions,
   IWebhookResponseData,
   NodeConnectionType,
-} from "n8n-workflow"
-import ipc from "node-ipc"
+} from 'n8n-workflow'
+import ipc from 'node-ipc'
 
 import {
   connection,
@@ -18,36 +18,36 @@ import {
   getChannels as getChannelsHelper,
   getRoles as getRolesHelper,
   ICredentials,
-} from "./bot/helpers"
-import { options } from "./DiscordTrigger.node.options"
+} from './bot/helpers'
+import { options } from './DiscordTrigger.node.options'
 
 const nodeDescription: INodeTypeDescription = {
-  displayName: "Discord Trigger",
-  name: "discordTrigger",
-  icon: "file:discord.svg",
-  group: ["trigger", "discord"],
+  displayName: 'Discord Trigger',
+  name: 'discordTrigger',
+  icon: 'file:discord.svg',
+  group: ['trigger', 'discord'],
   version: 1,
-  description: "Trigger based on Discord events",
-  eventTriggerDescription: "",
+  description: 'Trigger based on Discord events',
+  eventTriggerDescription: '',
   mockManualExecution: true,
-  activationMessage: "Your workflow will now trigger executions on the event you have defined.",
+  activationMessage: 'Your workflow will now trigger executions on the event you have defined.',
   defaults: {
-    name: "Discord Trigger",
+    name: 'Discord Trigger',
   },
   inputs: [],
   outputs: [NodeConnectionType.Main],
   credentials: [
     {
-      name: "discordApi",
+      name: 'discordApi',
       required: true,
     },
   ],
   webhooks: [
     {
-      name: "default",
-      httpMethod: "POST",
-      responseMode: "onReceived",
-      path: "webhook",
+      name: 'default',
+      httpMethod: 'POST',
+      responseMode: 'onReceived',
+      path: 'webhook',
     },
   ],
   properties: options,
@@ -76,11 +76,11 @@ export class DiscordTrigger implements INodeType {
   }
 
   async trigger(this: ITriggerFunctions): Promise<undefined> {
-    const activationMode = this.getActivationMode() as "activate" | "update" | "init" | "manual"
-    if (activationMode !== "manual") {
-      let baseUrl = ""
+    const activationMode = this.getActivationMode() as 'activate' | 'update' | 'init' | 'manual'
+    if (activationMode !== 'manual') {
+      let baseUrl = ''
 
-      const credentials = (await this.getCredentials("discordApi").catch((e) => e)) as any as ICredentials
+      const credentials = (await this.getCredentials('discordApi').catch((e) => e)) as any as ICredentials
       await connection(credentials).catch((e) => e)
 
       try {
@@ -93,15 +93,15 @@ export class DiscordTrigger implements INodeType {
         console.log(e)
       }
 
-      ipc.connectTo("bot", () => {
+      ipc.connectTo('bot', () => {
         const { webhookId } = this.getNode()
 
         const parameters: any = {}
         Object.keys(this.getNode().parameters).forEach((key) => {
-          parameters[key] = this.getNodeParameter(key, "") as any
+          parameters[key] = this.getNodeParameter(key, '') as any
         })
 
-        ipc.of.bot.emit("trigger", {
+        ipc.of.bot.emit('trigger', {
           ...parameters,
           baseUrl,
           webhookId,
@@ -116,7 +116,7 @@ export class DiscordTrigger implements INodeType {
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     const executionId = this.getExecutionId()
     const input = this.getInputData()
-    const credentials = (await this.getCredentials("discordApi")) as any as ICredentials
+    const credentials = (await this.getCredentials('discordApi')) as any as ICredentials
     const placeholderId = input[0].json?.placeholderId as string
     const channelId = input[0].json?.channelId as string
     const userId = input[0].json?.userId as string

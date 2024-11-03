@@ -1,12 +1,12 @@
-import { REST } from "@discordjs/rest"
+import { REST } from '@discordjs/rest'
 import {
   Client,
   GuildMember,
   Interaction,
   PermissionResolvable,
   RESTPostAPIApplicationCommandsJSONBody,
-} from "discord.js"
-import { Routes } from "discord-api-types/v10"
+} from 'discord.js'
+import { Routes } from 'discord-api-types/v10'
 
 // Interface to define the structure of each command
 interface Command {
@@ -18,7 +18,7 @@ interface Command {
 }
 
 // List of command names to import dynamically
-const imports = ["clear", "test", "logs"]
+const imports = ['clear', 'test', 'logs']
 
 // Array to store promises of imported commands
 const awaitingCommands: Promise<{
@@ -37,13 +37,13 @@ export const registerCommands = async (
   clientId: string,
   triggerCommands?: RESTPostAPIApplicationCommandsJSONBody[],
 ) => {
-  console.log("Registering commands")
+  console.log('Registering commands')
 
   // Wait for all commands to be imported
   const commands = await Promise.all(awaitingCommands).catch((e) => e)
 
   // Create a new REST instance with the bot token
-  const rest = new REST({ version: "10" }).setToken(token)
+  const rest = new REST({ version: '10' }).setToken(token)
 
   // Parse the commands to be sent to Discord
   const parsedCommands = commands.map((e: { default: Command }) => {
@@ -67,17 +67,17 @@ export default async function (token: string, clientId: string, client: Client) 
   const commands = await registerCommands(token, clientId)
 
   // Command execution handler when an interaction is created
-  client.on("interactionCreate", async (interaction: Interaction) => {
+  client.on('interactionCreate', async (interaction: Interaction) => {
     try {
       if (!interaction.isChatInputCommand()) return
 
       if (!interaction.guildId) {
-        await interaction.reply({ content: "Commands work only inside channels" })
+        await interaction.reply({ content: 'Commands work only inside channels' })
         return
       }
 
       const member = interaction.member as GuildMember
-      if (!member.permissions.has("ADMINISTRATOR" as PermissionResolvable)) return
+      if (!member.permissions.has('ADMINISTRATOR' as PermissionResolvable)) return
 
       const { commandName, options } = interaction
 
@@ -88,11 +88,11 @@ export default async function (token: string, clientId: string, client: Client) 
       const command = commands[i].default
 
       // Execute the command
-      const reply = await command.executeCommand(options.get("input")?.value, interaction).catch((e: any) => e)
+      const reply = await command.executeCommand(options.get('input')?.value, interaction).catch((e: any) => e)
       const botReply = await interaction.reply({ content: reply, fetchReply: true }).catch((e) => e)
 
       // Handle auto-remove of messages based on command params or if the reply is "Done!"
-      if (command.params?.autoRemove || reply === "Done!") {
+      if (command.params?.autoRemove || reply === 'Done!') {
         setTimeout(async () => {
           botReply.delete().catch((e: any) => console.log(e))
         }, 2000)

@@ -1,11 +1,11 @@
-import { Client, Role } from "discord.js"
-import Ipc from "node-ipc"
+import { Client, Role } from 'discord.js'
+import Ipc from 'node-ipc'
 
-import { addLog } from "../helpers"
-import state from "../state"
+import { addLog } from '../helpers'
+import state from '../state'
 
 export default async function (ipc: typeof Ipc, client: Client) {
-  ipc.server.on("list:roles", (data: undefined, socket: any) => {
+  ipc.server.on('list:roles', (data: undefined, socket: any) => {
     try {
       if (state.ready) {
         const guild = client.guilds.cache.first()
@@ -18,7 +18,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
           }
         })
 
-        ipc.server.emit(socket, "list:roles", rolesList)
+        ipc.server.emit(socket, 'list:roles', rolesList)
         addLog(`list:roles`, client)
       }
     } catch (e) {

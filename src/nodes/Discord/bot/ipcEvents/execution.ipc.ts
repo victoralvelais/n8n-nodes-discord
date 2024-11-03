@@ -1,14 +1,14 @@
-import axios from "axios"
-import { Client } from "discord.js"
-import Ipc from "node-ipc"
+import axios from 'axios'
+import { Client } from 'discord.js'
+import Ipc from 'node-ipc'
 
-import { addLog, IExecutionData } from "../helpers"
-import state from "../state"
+import { addLog, IExecutionData } from '../helpers'
+import state from '../state'
 
 export default async function (ipc: typeof Ipc, client: Client) {
-  ipc.server.on("execution", async (data: IExecutionData, socket: any) => {
+  ipc.server.on('execution', async (data: IExecutionData, socket: any) => {
     try {
-      ipc.server.emit(socket, "execution", true)
+      ipc.server.emit(socket, 'execution', true)
       if (data.executionId && data.channelId) {
         state.executionMatching[data.executionId] = {
           channelId: data.channelId,
@@ -23,8 +23,8 @@ export default async function (ipc: typeof Ipc, client: Client) {
             baseUrl: string,
           ) => {
             const headers = {
-              accept: "application/json",
-              "X-N8N-API-KEY": apiKey,
+              accept: 'application/json',
+              'X-N8N-API-KEY': apiKey,
             }
             const res = await axios.get(`${data.baseUrl}/executions/${executionId}`, { headers }).catch((e) => e)
             if (res && res.data && res.data.finished === false && res.data.stoppedAt === null) {

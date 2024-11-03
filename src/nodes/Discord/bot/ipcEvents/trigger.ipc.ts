@@ -6,17 +6,17 @@ import {
   SlashCommandIntegerOption,
   SlashCommandNumberOption,
   SlashCommandStringOption,
-} from "discord.js"
-import Ipc from "node-ipc"
+} from 'discord.js'
+import Ipc from 'node-ipc'
 
-import { registerCommands } from "../commands"
-import { addLog } from "../helpers"
-import state from "../state"
+import { registerCommands } from '../commands'
+import { addLog } from '../helpers'
+import state from '../state'
 
 export default async function (ipc: typeof Ipc, client: Client) {
   let timeout: null | NodeJS.Timeout = null
 
-  ipc.server.on("trigger", (data: any) => {
+  ipc.server.on('trigger', (data: any) => {
     try {
       addLog(`trigger ${data.webhookId} update`, client)
       state.triggers[data.webhookId] = data
@@ -29,7 +29,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
       Object.keys(state.triggers).forEach((webhookId) => {
         const parameters = state.triggers[webhookId]
         // if no chanellIds are specified, listen to all channels using the 'all' key
-        if (!parameters.channelIds || !parameters.channelIds.length) parameters.channelIds = ["all"]
+        if (!parameters.channelIds || !parameters.channelIds.length) parameters.channelIds = ['all']
         parameters.channelIds.forEach((channelId) => {
           if (!state.channels[channelId] && parameters.active) state.channels[channelId] = [parameters]
           else {
@@ -39,7 +39,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
         })
 
         // push trigger command to list
-        if (parameters.type === "command" && parameters.active) commandsParam.push(parameters)
+        if (parameters.type === 'command' && parameters.active) commandsParam.push(parameters)
       })
 
       // build & register commands
@@ -61,24 +61,24 @@ export default async function (ipc: typeof Ipc, client: Client) {
                 | SlashCommandBooleanOption,
             ) => {
               return option
-                .setName("input")
+                .setName('input')
                 .setDescription(params.commandFieldDescription)
                 .setRequired(params.commandFieldRequired ?? false)
             }
 
-            if (params.commandFieldType === "text") {
+            if (params.commandFieldType === 'text') {
               slashCommand = slashCommand.addStringOption((option: SlashCommandStringOption) => {
                 return getOption(option)
               })
-            } else if (params.commandFieldType === "number") {
+            } else if (params.commandFieldType === 'number') {
               slashCommand = slashCommand.addNumberOption((option: SlashCommandNumberOption) => {
                 return getOption(option)
               })
-            } else if (params.commandFieldType === "integer") {
+            } else if (params.commandFieldType === 'integer') {
               slashCommand = slashCommand.addIntegerOption((option: SlashCommandIntegerOption) => {
                 return getOption(option)
               })
-            } else if (params.commandFieldType === "boolean") {
+            } else if (params.commandFieldType === 'boolean') {
               slashCommand = slashCommand.addBooleanOption((option: SlashCommandBooleanOption) => {
                 return getOption(option)
               })
