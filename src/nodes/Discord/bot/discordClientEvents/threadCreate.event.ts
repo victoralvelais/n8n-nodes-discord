@@ -5,7 +5,7 @@ import { addLog, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
-  client.on('threadCreate', async (thread, newlyCreated) => {
+  client.on('threadCreate', async (thread) => {
     try {
       const threadOwner = await thread.fetchOwner()
       const threadStarter = await thread.fetchStarterMessage()

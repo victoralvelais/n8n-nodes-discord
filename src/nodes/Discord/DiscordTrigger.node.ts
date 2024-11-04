@@ -1,6 +1,9 @@
 import { Attachment } from 'discord.js'
 import {
+  ICredentialsDecrypted,
+  ICredentialTestFunctions,
   IExecuteFunctions,
+  INodeCredentialTestResult,
   INodeExecutionData,
   INodePropertyOptions,
   INodeType,
@@ -8,6 +11,7 @@ import {
   ITriggerFunctions,
   IWebhookFunctions,
   IWebhookResponseData,
+  JsonObject,
   NodeConnectionType,
 } from 'n8n-workflow'
 import ipc from 'node-ipc'
@@ -27,6 +31,7 @@ const nodeDescription: INodeTypeDescription = {
   icon: 'file:discord.svg',
   group: ['trigger', 'discord'],
   version: 1,
+  subtitle: '',
   description: 'Trigger based on Discord events',
   eventTriggerDescription: '',
   mockManualExecution: true,
@@ -40,6 +45,7 @@ const nodeDescription: INodeTypeDescription = {
     {
       name: 'discordApi',
       required: true,
+      testedBy: 'discordApiTest',
     },
   ],
   webhooks: [
@@ -57,6 +63,10 @@ export class DiscordTrigger implements INodeType {
   description: INodeTypeDescription = nodeDescription
 
   methods = {
+    credentialTest: {
+      discordApiTest,
+    },
+
     loadOptions: {
       async getChannels(): Promise<INodePropertyOptions[]> {
         return await getChannelsHelper(this).catch((e) => e)
@@ -156,5 +166,34 @@ export class DiscordTrigger implements INodeType {
       },
     })
     return this.prepareOutputData(returnData)
+  }
+}
+
+async function discordApiTest(
+  this: ICredentialTestFunctions,
+  credential: ICredentialsDecrypted,
+): Promise<INodeCredentialTestResult> {
+  const requestOptions = {
+    method: 'GET',
+    uri: 'https://discord.com/api/v10/oauth2/@me',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'User-Agent': 'DiscordBot (https://www.discord.com, 1)',
+      Authorization: `Bot ${credential.data?.token}`,
+    },
+    json: true,
+  }
+
+  try {
+    await this.helpers.request(requestOptions)
+  } catch (error) {
+    return {
+      status: 'Error',
+      message: `Connection details not valid: ${(error as JsonObject).message}`,
+    }
+  }
+  return {
+    status: 'OK',
+    message: 'Authentication successful!',
   }
 }

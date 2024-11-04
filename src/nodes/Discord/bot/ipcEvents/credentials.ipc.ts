@@ -46,7 +46,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
     } catch (e) {
       state.login = false
       ipc.server.emit(socket, 'credentials', 'error')
-      addLog(`${e}`, client)
+      addLog(`credentials error - ${e}`, client)
     }
   })
 }

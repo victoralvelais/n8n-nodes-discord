@@ -23,5 +23,5 @@
     "rootDir": "./src/",
     "outDir": "./dist/"
   },
-  "include": ["src/credentials**/*", "src/nodes/**/*", "src/nodes/**/*.json", "package.json"]
+  "include": ["src/**/*"],
 }

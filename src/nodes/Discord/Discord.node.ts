@@ -1,10 +1,15 @@
 import {
+  ICredentialsDecrypted,
+  ICredentialTestFunctions,
   IExecuteFunctions,
+  INodeCredentialTestResult,
   INodeExecutionData,
   INodePropertyOptions,
   INodeType,
   INodeTypeDescription,
+  JsonObject,
   NodeConnectionType,
+  NodeOperationError,
 } from 'n8n-workflow'
 
 import bot from './bot'
@@ -36,6 +41,7 @@ const nodeDescription: INodeTypeDescription = {
     {
       name: 'discordApi',
       required: true,
+      testedBy: 'discordApiTest',
     },
   ],
   properties: options,
@@ -131,6 +137,9 @@ export class Discord implements INodeType {
         return await getRolesHelper(this).catch((e) => e)
       },
     },
+    credentialTest: {
+      discordApiTest,
+    },
   }
 
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -140,7 +149,7 @@ export class Discord implements INodeType {
     // connection
     const credentials = (await this.getCredentials('discordApi').catch((e) => e)) as any as ICredentials
     await connection(credentials).catch((e) => {
-      throw new Error(e)
+      throw new NodeOperationError(this.getNode(), e)
     })
 
     // execution
@@ -166,7 +175,20 @@ export class Discord implements INodeType {
           }`,
           nodeParameters,
         ).catch((e) => {
-          throw new Error(e)
+          if (this.continueOnFail()) {
+            items.push({ json: this.getInputData(itemIndex)[0].json, e, pairedItem: itemIndex })
+          } else {
+            // Adding `itemIndex` allows other workflows to handle this error
+            if (e.context) {
+              // If the error thrown already contains the context property,
+              // only append the itemIndex
+              e.context.itemIndex = itemIndex
+              throw e
+            }
+            throw new NodeOperationError(this.getNode(), e, {
+              itemIndex,
+            })
+          }
         })
 
         returnData.push({
@@ -186,5 +208,34 @@ export class Discord implements INodeType {
     }
 
     return this.prepareOutputData(returnData)
+  }
+}
+
+async function discordApiTest(
+  this: ICredentialTestFunctions,
+  credential: ICredentialsDecrypted,
+): Promise<INodeCredentialTestResult> {
+  const requestOptions = {
+    method: 'GET',
+    uri: 'https://discord.com/api/v10/oauth2/@me',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'User-Agent': 'DiscordBot (https://www.discord.com, 1)',
+      Authorization: `Bot ${credential.data?.token}`,
+    },
+    json: true,
+  }
+
+  try {
+    await this.helpers.request(requestOptions)
+  } catch (error) {
+    return {
+      status: 'Error',
+      message: `Connection details not valid: ${(error as JsonObject).message}`,
+    }
+  }
+  return {
+    status: 'OK',
+    message: 'Authentication successful!',
   }
 }
