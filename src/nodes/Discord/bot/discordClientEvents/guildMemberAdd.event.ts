@@ -1,7 +1,6 @@
 import { Client, TextChannel } from 'discord.js'
-import { uid } from 'uid'
 
-import { addLog, placeholderLoading, triggerWorkflow } from '../helpers'
+import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
@@ -13,7 +12,7 @@ export default async function (client: Client) {
         channel.forEach(async (trigger) => {
           if (trigger.type === 'userJoins') {
             addLog(`triggerWorkflow ${trigger.webhookId}`, client)
-            const placeholderMatchingId = trigger.placeholder ? uid() : ''
+            const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
             const isEnabled = await triggerWorkflow(
               trigger.webhookId,
               null,

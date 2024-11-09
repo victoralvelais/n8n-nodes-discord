@@ -1,7 +1,6 @@
 import { Client, ComponentType, GuildMemberRoleManager, TextChannel } from 'discord.js'
-import { uid } from 'uid'
 
-import { addLog, placeholderLoading, triggerWorkflow } from '../helpers'
+import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
@@ -24,7 +23,7 @@ export default async function (client: Client) {
             }
 
             addLog(`triggerWorkflow ${trigger.webhookId}`, client)
-            const placeholderMatchingId = trigger.placeholder ? uid() : ''
+            const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
             const interactionValues = interaction.isButton() ? [interaction.customId] : interaction.values
             const isEnabled = await triggerWorkflow(
               trigger.webhookId,

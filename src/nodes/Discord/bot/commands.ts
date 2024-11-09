@@ -5,8 +5,8 @@ import {
   Interaction,
   PermissionResolvable,
   RESTPostAPIApplicationCommandsJSONBody,
+  Routes,
 } from 'discord.js'
-import { Routes } from 'discord-api-types/v10'
 
 // Interface to define the structure of each command
 interface Command {

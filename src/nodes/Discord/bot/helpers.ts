@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Client, Message, User } from 'discord.js'
+import { hexoid } from 'hexoid'
 import { INodePropertyOptions } from 'n8n-workflow'
 import ipc from 'node-ipc'
 
@@ -40,7 +41,6 @@ export const connection = (credentials: ICredentials): Promise<string> => {
 export const getChannels = async (that: any): Promise<INodePropertyOptions[]> => {
   const endMessage = ' - Close and reopen this node modal once you have made changes.'
 
-  console.log('credentials')
   const credentials = await that.getCredentials('discordApi').catch((e: any) => e)
   const res = await connection(credentials).catch((e) => e)
   if (!['ready', 'already'].includes(res)) {
@@ -310,4 +310,8 @@ export const placeholderLoading = async (placeholder: Message, placeholderMatchi
 export function withTimeout<T>(promise: Promise<T>, ms: number) {
   const timeout = new Promise((resolve, reject) => setTimeout(() => reject(`Timed out after ${ms} ms.`), ms))
   return Promise.race([promise, timeout])
+}
+
+export function generateUniqueId(length: number = 12): string {
+  return hexoid(length)()
 }

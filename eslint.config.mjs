@@ -1,6 +1,5 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { FlatCompat } from "@eslint/eslintrc";
 import { includeIgnoreFile } from '@eslint/compat';
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptEslintParser from '@typescript-eslint/parser';
@@ -11,8 +10,6 @@ import n8nNodesBasePlugin from 'eslint-plugin-n8n-nodes-base';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const gitignorePath = path.resolve(__dirname, '.gitignore');
-
-const compat = new FlatCompat()
 
 export default [
   includeIgnoreFile(gitignorePath),
