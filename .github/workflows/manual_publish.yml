@@ -23,7 +23,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --prod --frozen-lockfile true 
 
-      - name: Publish package on NPM
-        run: pnpm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
