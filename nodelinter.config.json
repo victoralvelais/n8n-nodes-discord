@@ -9,7 +9,7 @@
       "PARAM_DESCRIPTION_MISSING_WHERE_OPTIONAL": {
         "enabled": false
       },
-      "WRONG_NUMBER_OF_INPUTS_IN_REGULAR_NODE_DESCRIPTION": {
+      "MISMATCHED_NONOAUTH_CREDENTIALS_TEST_METHOD_REFERENCE": {
         "enabled": false
       }
     }

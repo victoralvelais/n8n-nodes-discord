@@ -39,6 +39,7 @@ const nodeDescription: INodeTypeDescription = {
   defaults: {
     name: 'Discord Trigger',
   },
+  // nodelinter-ignore-next-line WRONG_NUMBER_OF_INPUTS_IN_REGULAR_NODE_DESCRIPTION
   inputs: [],
   outputs: [NodeConnectionType.Main],
   credentials: [
@@ -66,7 +67,6 @@ export class DiscordTrigger implements INodeType {
     credentialTest: {
       discordApiTest,
     },
-
     loadOptions: {
       async getChannels(): Promise<INodePropertyOptions[]> {
         return await getChannelsHelper(this).catch((e) => e)
