@@ -10,11 +10,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version-file: 'package.json'
+          cache: 'pnpm'          
           registry-url: 'https://registry.npmjs.org'
+      - name: Setup pnpm            
+        uses: pnpm/action-setup@v4.0.0
       - name: Install dependencies and build 🔧
-        run: npm ci
+        run: pnpm install --prod --frozen-lockfile true
       - name: Publish package on NPM 📦
-        run: npm publish --access public
+        run: pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
