@@ -5,7 +5,7 @@ name: Node.js Package
 
 on:
   release:
-    types: [published]
+    types: [created, edited]
 
 jobs:
   build:
@@ -27,8 +27,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-          scope: '@kmcbride3'
       - run: npm ci
-      - run: npm publish --access public
+      - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
