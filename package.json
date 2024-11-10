@@ -42,10 +42,6 @@
       "dist/nodes/Discord/DiscordTrigger.node.js"
     ]
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  },  
   "pnpm": {
     "overrides": {
       "eslint": "^9.14.0",
