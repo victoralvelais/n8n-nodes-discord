@@ -1,5 +1,27 @@
 # Changelog
 
+## Released (2024-11-17 0.7.1)
+
+### Improvements/refactoring
+
+- Additional dependency clean-up and updates
+
+## Released (2024-11-10 0.7.0)
+
+### New Features
+
+- Discord Trigger Node
+- **New trigger type:** Threads - start a workflow when a new thread is created. Supports all the same parameters as the _Message_ trigger.
+- **New trigger type:** Nicknames - start a workflow when a user's server nickname is updated. Supports all the same parameters as the _User Role_ trigger.
+- Now listens and reacts to all trigger events from bots
+
+### Improvements/refactoring
+
+- Added [Node Codex](https://docs.n8n.io/integrations/creating-nodes/build/reference/node-codex-files/)'s for both Discord Trigger and Discord Send.
+- Replaced `.eslintignore`, `.eslintrc`, and `.eslintrc.js` with new `eslint.config.mjs` flat file.
+- Added configuration file to support n8n's [nodelinter](https://github.com/n8n-io/nodelinter).
+- Removed unnecessary dependencies, updated all remaining ones to latest version
+
 ## Released (2023-01-18 0.5.0)
 
 ### New Features
