@@ -1,5 +1,12 @@
 # Changelog
 
+## Released (2024-11-17 0.7.2)
+
+### Improvements/refactoring
+
+- Bug fixes for missing roleIds in triggers
+- Additional dependency updates
+
 ## Released (2024-11-17 0.7.1)
 
 ### Improvements/refactoring

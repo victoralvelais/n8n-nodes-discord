@@ -14,7 +14,7 @@ export default async function (client: Client) {
         const channel = state.channels[key]
         channel.forEach(async (trigger) => {
           if (trigger.type === 'interaction' && trigger.interactionMessageId === interaction.message.id) {
-            if (trigger.roleIds.length) {
+            if (trigger.roleIds?.length) {
               const hasRole = trigger.roleIds.some((role: string) => userRoles?.includes(role))
               if (!hasRole) {
                 interaction.reply({ content: `You are not allowed to do this`, ephemeral: true })

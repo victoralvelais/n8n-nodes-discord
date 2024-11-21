@@ -20,7 +20,7 @@ export default async function (client: Client) {
         Object.keys(state.channels).forEach((key) => {
           const channel = state.channels[key]
           channel.forEach(async (trigger) => {
-            if (trigger.roleIds.length) {
+            if (trigger.roleIds?.length) {
               const hasRole = trigger.roleIds.some((role) => previousUserRoles?.includes(role))
               if (!hasRole) return
             }

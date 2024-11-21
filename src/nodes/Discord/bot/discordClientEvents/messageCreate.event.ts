@@ -15,7 +15,7 @@ export default async function (client: Client) {
       if (state.channels[message.channelId] || state.channels.all) {
         ;[...(state.channels[message.channelId] ?? []), ...(state.channels.all ?? [])].forEach(async (trigger) => {
           if (trigger.type === 'message') {
-            if (trigger.roleIds.length) {
+            if (trigger.roleIds?.length) {
               const hasRole = trigger.roleIds.some((role) => userRoles?.includes(role))
               if (!hasRole) return
             }
