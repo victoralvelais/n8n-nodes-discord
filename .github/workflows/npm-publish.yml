@@ -27,7 +27,10 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --prod --frozen-lockfile true 
+        run: pnpm install --prod --frozen-lockfile true
+
+      - name: Build dist
+        run: pnpm build
 
       - uses: JS-DevTools/npm-publish@v3
         with:
