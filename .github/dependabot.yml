@@ -8,4 +8,18 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "07:00"
+
+groups:
+  production-dependencies:
+    dependency-type: "production"
+  development-dependencies:
+    dependency-type: "development"
+
+registries:
+  npm-npmjs:
+    type: npm-registry
+    url: https://registry.npmjs.org
+    token: ${{secrets.NPM_TOKEN}}  # Must be an unencoded password
+    replaces-base: true
