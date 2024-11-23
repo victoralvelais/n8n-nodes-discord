@@ -11,21 +11,21 @@ updates:
       interval: "daily"
       time: "07:00"
 
-  groups:
-    production-dependencies:
-      dependency-type: "production"
-      patterns:
-          - "*"
-      update-types:
-          - "minor"
-          - "patch"    
-    development-dependencies:
-      dependency-type: "development"
-      patterns:
-          - "*"
-      update-types:
-          - "minor"
-          - "patch"    
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        patterns:
+            - "*"
+        update-types:
+            - "minor"
+            - "patch"    
+      development-dependencies:
+        dependency-type: "development"
+        patterns:
+            - "*"
+        update-types:
+            - "minor"
+            - "patch"    
 
 registries:
   npm-npmjs:
