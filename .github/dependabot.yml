@@ -14,16 +14,16 @@ updates:
 groups:
   production-dependencies:
     dependency-type: "production"
-        patterns:
+    patterns:
         - "*"
-        update-types:
+    update-types:
         - "minor"
         - "patch"    
   development-dependencies:
     dependency-type: "development"
-        patterns:
+    patterns:
         - "*"
-        update-types:
+    update-types:
         - "minor"
         - "patch"    
 
