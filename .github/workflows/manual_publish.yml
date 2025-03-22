@@ -26,7 +26,7 @@ jobs:
       - name: Build dist
         run: pnpm build
 
-      - uses: JS-DevTools/npm-publish@v3
+      - uses: JS-DevTools/npm-publish@v3.1.1
         with:
           token: ${{ secrets.NPM_TOKEN }}
           access: public
