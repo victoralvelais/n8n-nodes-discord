@@ -8,6 +8,7 @@ const state: {
   triggers: {
     [key: string]: {
       webhookId: string
+      serverIds: string[]
       channelIds: string[]
       roleIds: string[]
       roleUpdateIds: string[]

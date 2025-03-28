@@ -15,6 +15,7 @@ import credentialsIpc from './ipcEvents/credentials.ipc'
 import executionIpc from './ipcEvents/execution.ipc'
 import listChannelsIpc from './ipcEvents/listChannels.ipc'
 import listRolesIpc from './ipcEvents/listRoles.ipc'
+import listServersIpc from './ipcEvents/listServers.ipc'
 import sendActionIpc from './ipcEvents/sendAction.ipc'
 import sendMessageIpc from './ipcEvents/sendMessage.ipc'
 import sendPromptIpc from './ipcEvents/sendPrompt.ipc'
@@ -79,6 +80,9 @@ export default function () {
     // when a trigger is activated or updated, we get the trigger data et parse it
     // so when a message is received we can check if it matches a trigger
     triggerIpc(ipc, client)
+
+    // used to handle servers selection in the n8n UI
+    listServersIpc(ipc, client)
 
     // used to handle channels selection in the n8n UI
     listChannelsIpc(ipc, client)

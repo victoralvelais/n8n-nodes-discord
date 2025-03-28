@@ -2,6 +2,17 @@ import { INodeProperties } from 'n8n-workflow'
 
 export const options: INodeProperties[] = [
   {
+    displayName: 'Choose servers',
+    name: 'serverIds',
+    required: false,
+    type: 'multiOptions',
+    typeOptions: {
+      loadOptionsMethod: 'getServers',
+    },
+    default: [],
+    description: `Select a list of servers for this trigger`,
+  },
+  {
     displayName: 'Listen to',
     name: 'channelIds',
     required: false,

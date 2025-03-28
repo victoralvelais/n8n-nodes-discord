@@ -57,8 +57,9 @@ export const getChannels = async (that: any): Promise<INodePropertyOptions[]> =>
       const timeout = setTimeout(() => resolve(''), 5000)
 
       ipc.config.retry = 1500
+      const serverIds = that.getNodeParameter('serverIds')
       ipc.connectTo('bot', () => {
-        ipc.of.bot.emit('list:channels')
+        ipc.of.bot.emit('list:channels', { serverIds })
 
         ipc.of.bot.on('list:channels', (data: { name: string; value: string }[]) => {
           clearTimeout(timeout)
@@ -74,6 +75,54 @@ export const getChannels = async (that: any): Promise<INodePropertyOptions[]> =>
   if (channels) {
     if (Array.isArray(channels) && channels.length) return channels
     else message = 'Your Discord server has no text channels, please add at least one text channel' + endMessage
+  }
+
+  return [
+    {
+      name: message,
+      value: 'false',
+    },
+  ]
+}
+
+export const getServers = async (that: any): Promise<INodePropertyOptions[]> => {
+  const endMessage = ' - Close and reopen this node modal once you have made changes.'
+
+  const credentials = await that.getCredentials('discordApi').catch((e: any) => e)
+  const res = await connection(credentials).catch((e) => e)
+  if (!['ready', 'already'].includes(res)) {
+    return [
+      {
+        name: res + endMessage,
+        value: 'false',
+      },
+    ]
+  }
+
+  const serverIds = that.getNodeParameter('serverIds') as string[]
+
+  const serversRequest = () =>
+    new Promise((resolve) => {
+      const timeout = setTimeout(() => resolve(''), 5000)
+
+      ipc.config.retry = 1500
+      ipc.connectTo('bot', () => {
+        ipc.of.bot.emit('list:servers', { serverIds })
+
+        ipc.of.bot.on('list:servers', (data: { name: string; value: string }[]) => {
+          clearTimeout(timeout)
+          resolve(data)
+        })
+      })
+    })
+
+  const servers = await serversRequest().catch((e) => e)
+
+  let message = 'Unexpected error'
+
+  if (servers) {
+    if (Array.isArray(servers) && servers.length) return servers
+    else message = 'Your Discord bot is not in any servers yet, please add it to at least one server' + endMessage
   }
 
   return [
@@ -103,13 +152,15 @@ export const getRoles = async (that: any): Promise<INodePropertyOptions[]> => {
     ]
   }
 
+  const serverIds = that.getNodeParameter('serverIds') as string[]
+
   const rolesRequest = () =>
     new Promise((resolve) => {
       const timeout = setTimeout(() => resolve(''), 5000)
 
       ipc.config.retry = 1500
       ipc.connectTo('bot', () => {
-        ipc.of.bot.emit('list:roles')
+        ipc.of.bot.emit('list:roles', { serverIds })
 
         ipc.of.bot.on('list:roles', (data: any) => {
           clearTimeout(timeout)
@@ -165,6 +216,7 @@ export const triggerWorkflow = async (
       `${baseUrl}/webhook${state.testMode ? '-test' : ''}/${webhookId}/webhook`,
       {
         content: message?.content,
+        serverId: message?.guildId,
         channelId: message?.channelId ?? channelId,
         placeholderId,
         userId: message?.author.id ?? user?.id,

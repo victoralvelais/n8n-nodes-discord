@@ -21,6 +21,7 @@ import {
   execution,
   getChannels as getChannelsHelper,
   getRoles as getRolesHelper,
+  getServers as getServersHelper,
   ICredentials,
 } from './bot/helpers'
 import { options } from './DiscordTrigger.node.options'
@@ -68,6 +69,9 @@ export class DiscordTrigger implements INodeType {
       discordApiTest,
     },
     loadOptions: {
+      async getServers(): Promise<INodePropertyOptions[]> {
+        return await getServersHelper(this).catch((e) => e)
+      },
       async getChannels(): Promise<INodePropertyOptions[]> {
         return await getChannelsHelper(this).catch((e) => e)
       },
@@ -128,6 +132,7 @@ export class DiscordTrigger implements INodeType {
     const input = this.getInputData()
     const credentials = (await this.getCredentials('discordApi')) as any as ICredentials
     const placeholderId = input[0].json?.placeholderId as string
+    const serverId = input[0].json?.guildId as string
     const channelId = input[0].json?.channelId as string
     const userId = input[0].json?.userId as string
     const userName = input[0].json?.userName as string
@@ -150,6 +155,7 @@ export class DiscordTrigger implements INodeType {
     returnData.push({
       json: {
         content,
+        serverId,
         channelId,
         userId,
         userName,
