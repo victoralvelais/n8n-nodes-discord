@@ -18,6 +18,7 @@ export const options: INodeProperties[] = [
     required: false,
     type: 'multiOptions',
     typeOptions: {
+      loadOptionsDependsOn: ['serverIds'],
       loadOptionsMethod: 'getChannels',
     },
     default: [],

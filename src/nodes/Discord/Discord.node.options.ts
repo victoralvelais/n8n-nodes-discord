@@ -57,10 +57,10 @@ export const options: INodeProperties[] = [
     type: 'options',
     typeOptions: {
       loadOptionsMethod: 'getChannels',
+      loadOptionsDependsOn: ['serverIds'],
     },
     displayOptions: {
       hide: {
-        serverIds: [undefined, null, ''],
         triggerPlaceholder: [true],
         triggerChannel: [true],
         type: ['none'],
