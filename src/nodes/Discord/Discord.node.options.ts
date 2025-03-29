@@ -33,6 +33,24 @@ export const options: INodeProperties[] = [
     description: `If active, the message produced will be sent to the same channel were the workflow was triggered (but not replace the placeholder if there is one).`,
   },
   {
+    displayName: 'Choose server',
+    name: 'serverIds',
+    required: false,
+    type: 'options',
+    typeOptions: {
+      loadOptionsMethod: 'getServers',
+    },
+    displayOptions: {
+      hide: {
+        triggerPlaceholder: [true],
+        triggerChannel: [true],
+        type: ['none'],
+      },
+    },
+    default: '',
+    description: `Let you specify the servers where you want to send the message. Your credentials must be set and the bot running in at least one server. If you do not meet these requirements, make the changes then close and reopen the modal (the channels list is loaded when the modal opens).`,
+  },
+  {
     displayName: 'Send to',
     name: 'channelId',
     required: false,
@@ -42,6 +60,7 @@ export const options: INodeProperties[] = [
     },
     displayOptions: {
       hide: {
+        serverIds: [undefined, null, ''],
         triggerPlaceholder: [true],
         triggerChannel: [true],
         type: ['none'],

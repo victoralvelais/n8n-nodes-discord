@@ -5,7 +5,8 @@ import { addLog } from '../helpers'
 import state from '../state'
 
 export default async function (ipc: typeof Ipc, client: Client) {
-  ipc.server.on('list:channels', (data: { serverIds: string[] }, socket: any) => {
+  ipc.server.on('list:channels', (data: { serverIds: string | string[] }, socket: any) => {
+    const { serverIds } = data
     try {
       if (state.ready) {
         const channels: { name: string; value: string }[] = []
@@ -24,10 +25,11 @@ export default async function (ipc: typeof Ipc, client: Client) {
           })
         }
 
-        if (!data.serverIds?.length) {
+        if (!serverIds?.length) {
           client.guilds.cache.forEach(getChannelsFromGuild)
         } else {
-          data.serverIds.forEach((serverId) => {
+          const serverIdArray = Array.isArray(serverIds) ? serverIds : [serverIds]
+          serverIdArray.forEach((serverId) => {
             const guild = client.guilds.cache.get(serverId)
             if (guild) {
               getChannelsFromGuild(guild)

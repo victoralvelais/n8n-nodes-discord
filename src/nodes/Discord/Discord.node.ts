@@ -17,6 +17,7 @@ import {
   connection,
   getChannels as getChannelsHelper,
   getRoles as getRolesHelper,
+  getServers as getServersHelper,
   ICredentials,
   ipcRequest,
 } from './bot/helpers'
@@ -130,6 +131,9 @@ export class Discord implements INodeType {
 
   methods = {
     loadOptions: {
+      async getServers(): Promise<INodePropertyOptions[]> {
+        return await getServersHelper(this).catch((e) => e)
+      },
       async getChannels(): Promise<INodePropertyOptions[]> {
         return await getChannelsHelper(this).catch((e) => e)
       },
