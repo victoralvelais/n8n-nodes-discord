@@ -1,5 +1,12 @@
 # Changelog
 
+## Released (2025-03-30 0.8.0)
+
+### New Features
+
+- Added support for multiple servers
+- Expand listening channels
+
 ## Released (2024-11-17 0.7.2)
 
 ### Improvements/refactoring
