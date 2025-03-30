@@ -4,7 +4,7 @@ export class DiscordApi implements ICredentialType {
   name = 'discordApi'
 
   displayName = 'Discord App'
-  documentationUrl = 'https://github.com/kmcbride3/n8n-nodes-discord'
+  documentationUrl = 'https://github.com/victoralvelais/n8n-nodes-discord'
   properties: INodeProperties[] = [
     {
       displayName: 'Client ID',

@@ -12,7 +12,7 @@ These nodes do not use webhooks but a Discord bot to enable two-way communicatio
 
 1. Go to **Settings > Community Nodes**.
 2. Select **Install**.
-3. Enter `@kmcbride3/n8n-nodes-discord` in **Enter npm package name**.
+3. Enter `@victoralvelais/n8n-nodes-discord` in **Enter npm package name**.
 4. Agree to the [risks](https://docs.n8n.io/integrations/community-nodes/risks/) of using community nodes: select **I understand the risks of installing unverified code from a public source**.
 5. Select **Install**.
 
@@ -22,11 +22,11 @@ After installing the node, you can use it like any other node. n8n displays the 
 
 To get started install the package in your n8n root directory:
 
-`npm install @kmcbride3/n8n-nodes-discord`
+`npm install @victoralvelais/n8n-nodes-discord`
 
 For Docker-based deployments, add the following line before the font installation command in your [n8n Dockerfile](https://github.com/n8n-io/n8n/blob/master/docker/images/n8n/Dockerfile):
 
-`RUN cd /usr/local/lib/node_modules/n8n && npm install @kmcbride3/n8n-nodes-discord`
+`RUN cd /usr/local/lib/node_modules/n8n && npm install @victoralvelais/n8n-nodes-discord`
 
 ## Bot setup
 
@@ -67,6 +67,7 @@ Now you will be able to use the **Discord Trigger** and **Discord Send** nodes o
 ## Discord Trigger Node Reference
 
 - **Credential for Discord App**: If you follow the bot setup guide above, you will be able to select your Discord App credentials to start the bot. If you are already another Discord Trigger (or Send) node, be careful to select the same credentials. It's not meant at the moment to be used with multiple Discord servers.
+- **Choose servers**: Select a list of servers for this trigger. You must have at least one server selected to use the Discord Trigger node.
 - **Listen to**: Let you select the text channels you want to listen to for triggering the workflow. If none are selected, all channels will be listened to. Your credentials must be set and the bot running, you also need at least one text channel available. If you do not meet these requirements, make the changes then close and reopen the modal (the channels list is loaded when the modal opens). For "User" trigger types, if you want to use a placeholder, select the channel where you want it displayed.
 - **From roles**: The same logic apply here for roles, except it is optional. If you don't select any role it will listen to **@everyone**.
 - **Trigger type**: Type of event to listen to. User events must specify a channel to listen to if you want to use a placeholder or the option "send to the trigger channel" in a Discord Send node.
