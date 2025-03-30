@@ -57,7 +57,7 @@ export const getChannels = async (that: any): Promise<INodePropertyOptions[]> =>
       const timeout = setTimeout(() => resolve(''), 5000)
 
       ipc.config.retry = 1500
-      const serverIds = that.getNodeParameter('serverIds')
+      const serverIds: string | string[] = that.getNodeParameter('serverIds')
       ipc.connectTo('bot', () => {
         ipc.of.bot.emit('list:channels', { serverIds })
 
@@ -99,8 +99,7 @@ export const getServers = async (that: any): Promise<INodePropertyOptions[]> => 
     ]
   }
 
-  const serverIds = that.getNodeParameter('serverIds') as string[]
-
+  const serverIds: string | string[] = that.getNodeParameter('serverIds')
   const serversRequest = () =>
     new Promise((resolve) => {
       const timeout = setTimeout(() => resolve(''), 5000)
@@ -152,8 +151,7 @@ export const getRoles = async (that: any): Promise<INodePropertyOptions[]> => {
     ]
   }
 
-  const serverIds = that.getNodeParameter('serverIds') as string[]
-
+  const serverIds: string | string[] = that.getNodeParameter('serverIds')
   const rolesRequest = () =>
     new Promise((resolve) => {
       const timeout = setTimeout(() => resolve(''), 5000)
