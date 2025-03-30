@@ -150,6 +150,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
               promptProcessing(message)
             } else if (message && message.id && nodeParameters.persistent) {
               ipc.server.emit(socket, 'send:prompt', {
+                serverId: message.guildId,
                 channelId: channel.id,
                 messageId: message.id,
               })

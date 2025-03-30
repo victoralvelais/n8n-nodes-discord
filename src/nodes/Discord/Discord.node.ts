@@ -198,6 +198,7 @@ export class Discord implements INodeType {
         returnData.push({
           json: {
             value: res?.value,
+            serverId: res?.serverId,
             channelId: res?.channelId,
             userId: res?.userId,
             userName: res?.userName,

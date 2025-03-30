@@ -144,6 +144,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
                         addLog(`${e}`, client)
                       })
                       ipc.server.emit(socket, 'send:message', {
+                        serverId: message.guildId,
                         channelId,
                         messageId: message.id,
                       })
@@ -157,7 +158,7 @@ export default async function (ipc: typeof Ipc, client: Client) {
             const message = (await (channel as TextChannel).send(sendObject).catch((e: any) => {
               addLog(`${e}`, client)
             })) as Message
-            ipc.server.emit(socket, 'send:message', { channelId, messageId: message.id })
+            ipc.server.emit(socket, 'send:message', { serverId: message.guildId, channelId, messageId: message.id })
           })
           .catch((e: any) => {
             addLog(`${e}`, client)

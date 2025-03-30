@@ -132,7 +132,7 @@ export class DiscordTrigger implements INodeType {
     const input = this.getInputData()
     const credentials = (await this.getCredentials('discordApi')) as any as ICredentials
     const placeholderId = input[0].json?.placeholderId as string
-    const serverId = input[0].json?.guildId as string
+    const serverId = input[0].json?.serverId as string
     const channelId = input[0].json?.channelId as string
     const userId = input[0].json?.userId as string
     const userName = input[0].json?.userName as string

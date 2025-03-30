@@ -1,10 +1,10 @@
-import { Client, ComponentType, GuildMemberRoleManager, TextChannel } from 'discord.js'
+import { CacheType, Client, ComponentType, GuildMemberRoleManager, Interaction, TextChannel } from 'discord.js'
 
 import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
-  client.on('interactionCreate', (interaction) => {
+  client.on('interactionCreate', (interaction: Interaction<CacheType>) => {
     try {
       if (!interaction.isButton() && !interaction.isSelectMenu()) return
 
@@ -100,6 +100,7 @@ export default async function (client: Client) {
         promptData.userId = interaction.user.id
         promptData.userName = interaction.user.username
         promptData.userTag = interaction.user.tag
+        promptData.serverId = interaction.message.guildId
         promptData.channelId = interaction.message.channelId
         promptData.messageId = interaction.message.id
         interaction.update({ components: [] }).catch((e: any) => e)
