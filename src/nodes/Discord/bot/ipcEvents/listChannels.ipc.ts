@@ -5,18 +5,19 @@ import { addLog } from '../helpers'
 import state from '../state'
 
 export default async function (ipc: typeof Ipc, client: Client) {
+  const { GuildAnnouncement, GuildText, GuildVoice, GuildStageVoice, PublicThread, AnnouncementThread } = ChannelType
   ipc.server.on('list:channels', (data: { serverIds: string | string[] }, socket: any) => {
     const { serverIds } = data
     try {
       if (state.ready) {
         const channels: { name: string; value: string }[] = []
-
         const getChannelsFromGuild = (guild) => {
           const guildChannels =
-            guild.channels.cache.filter(
-              (c) => c.type === ChannelType.GuildText || c.type === ChannelType.GuildAnnouncement,
+            guild.channels.cache.filter((c) =>
+              [GuildText, GuildAnnouncement, GuildVoice, GuildStageVoice, PublicThread, AnnouncementThread].includes(
+                c.type,
+              ),
             ) ?? ([] as GuildBasedChannel[])
-
           guildChannels.forEach((channel: GuildBasedChannel) => {
             channels.push({
               name: `${channel.name} (${guild.name})`,
