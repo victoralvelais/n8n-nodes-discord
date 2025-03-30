@@ -691,6 +691,7 @@ export const options: INodeProperties[] = [
     type: 'multiOptions',
     typeOptions: {
       loadOptionsMethod: 'getRoles',
+      loadOptionsDependsOn: ['serverIds'],
     },
     displayOptions: {
       show: {

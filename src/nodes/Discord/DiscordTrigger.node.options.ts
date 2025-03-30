@@ -46,6 +46,7 @@ export const options: INodeProperties[] = [
     },
     typeOptions: {
       loadOptionsMethod: 'getRoles',
+      loadOptionsDependsOn: ['serverIds'],
     },
     default: [],
     description: `The same logic apply here for roles, except it is optional. If you don't select any role it will listen to @everyone.`,
