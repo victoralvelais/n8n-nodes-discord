@@ -204,6 +204,7 @@ export const triggerWorkflow = async (
   interactionMessageId?: string,
   interactionValues?: string[],
   userRoles?: string[],
+  event?: { eventName: string; eventData: any },
 ): Promise<boolean> => {
   const headers = {
     accept: 'application/json',
@@ -229,6 +230,7 @@ export const triggerWorkflow = async (
         interactionMessageId,
         interactionValues,
         userRoles,
+        event,
       },
       { headers },
     )
@@ -245,7 +247,6 @@ export const triggerWorkflow = async (
   if (res) return true
   return false
 }
-
 export const addLog = (message: string, client: Client) => {
   console.log(message)
   if (state.logs.length > 99) state.logs.shift()

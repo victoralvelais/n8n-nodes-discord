@@ -13,6 +13,7 @@ const state: {
       roleIds: string[]
       roleUpdateIds: string[]
       type: string
+      customEvent?: string
       pattern?: string
       value?: string
       name?: string
@@ -36,6 +37,7 @@ const state: {
         roleIds: string[]
         roleUpdateIds: string[]
         type: string
+        customEvent?: string
         pattern?: string
         value?: string
         name?: string

@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits } from 'discord.js'
 import ipc from 'node-ipc'
 
+import registerAllEvents from './discordClientEvents/genericEventHandler.event'
 import guildMemberAddEvent from './discordClientEvents/guildMemberAdd.event'
 import guildMemberRemoveEvent from './discordClientEvents/guildMemberRemove.event'
 import guildMemberUpdateEvent from './discordClientEvents/guildMemberUpdate.event'
@@ -29,7 +30,7 @@ export default function () {
       GatewayIntentBits.MessageContent,
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildPresences,
-      GatewayIntentBits.GuildBans,
+      GatewayIntentBits.GuildModeration,
       GatewayIntentBits.GuildMessageReactions,
       GatewayIntentBits.GuildMessageTyping,
     ],
@@ -65,6 +66,10 @@ export default function () {
 
   // the bot listen to all interactions (slash commands) and check if it matches a referenced trigger
   interactionCreateEventCmd(client)
+
+  // Register all Discord events
+  const registeredEvents = registerAllEvents(client)
+  addLog(`Registered ${registeredEvents.length} Discord events`, client)
 
   ipc.config.id = 'bot'
   ipc.config.retry = 1500

@@ -107,9 +107,30 @@ export const options: INodeProperties[] = [
         value: 'userRoleRemoved',
         description: 'When a user role is removed.',
       },
+      {
+        name: 'Custom Event',
+        value: 'useCustomEvent',
+        description: 'Input your event name in the field below.',
+      },
     ],
     default: 'message',
     description: `Type of event to listen to. User events must specify a channel to listen to if you want to use a placeholder or the option "send to the trigger channel" in a Discord Send node.`,
+  },
+  {
+    displayName: 'Custom Event',
+    name: 'customEvent',
+    required: false,
+    type: 'string',
+    displayOptions: {
+      show: {
+        type: ['useCustomEvent'],
+      },
+    },
+    // typeOptions: {
+    //   loadOptionsMethod: 'getRoles',
+    // },
+    default: [],
+    description: `Use custom event`,
   },
   {
     displayName: 'Which roles',
