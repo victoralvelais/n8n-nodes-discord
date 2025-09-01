@@ -192,6 +192,7 @@ export const getRoles = async (that: any): Promise<INodePropertyOptions[]> => {
 
 export interface TriggerWorkflowOptions {
   webhookId: string
+  serverId?: string | null
   message?: Message | null
   placeholderId: string
   baseUrl: string
@@ -209,6 +210,7 @@ export interface TriggerWorkflowOptions {
 export const triggerWorkflow = async (options: TriggerWorkflowOptions): Promise<boolean> => {
   const {
     webhookId,
+    serverId,
     message,
     placeholderId,
     baseUrl,
@@ -232,7 +234,6 @@ export const triggerWorkflow = async (options: TriggerWorkflowOptions): Promise<
       `${baseUrl}/webhook${state.testMode ? '-test' : ''}/${webhookId}/webhook`,
       {
         content: message?.content,
-        serverId: message?.guildId,
         channelId: message?.channelId ?? channelId,
         placeholderId,
         userId: message?.author.id ?? user?.id,
@@ -240,12 +241,13 @@ export const triggerWorkflow = async (options: TriggerWorkflowOptions): Promise<
         userTag: message?.author.tag ?? user?.tag,
         messageId: message?.id,
         attachments: message?.attachments,
+        serverId,
         presence,
         nick,
         addedRoles,
         removedRoles,
         interactionMessageId,
-        interactionValues,
+        interactionValues, // BUG - input field type does not support multiple inputs for commands
         userRoles,
       },
       { headers },

@@ -1,10 +1,10 @@
-import { Client, TextChannel } from 'discord.js'
+import type { Client, GuildMember, PartialGuildMember, TextChannel } from 'discord.js'
 
 import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
-  client.on('guildMemberUpdate', (oldMember, member) => {
+  client.on('guildMemberUpdate', (oldMember: GuildMember | PartialGuildMember, member: GuildMember) => {
     try {
       if (!member || member.user.system) return
       const previousUserRoles = oldMember.roles.cache.map((role) => role.id)
@@ -41,6 +41,7 @@ export default async function (client: Client) {
               const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
               const isEnabled = await triggerWorkflow({
                 webhookId: trigger.webhookId,
+                serverId: member.guild.id,
                 message: null,
                 placeholderId: placeholderMatchingId,
                 baseUrl: state.baseUrl,
@@ -70,6 +71,7 @@ export default async function (client: Client) {
               const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
               const isEnabled = await triggerWorkflow({
                 webhookId: trigger.webhookId,
+                serverId: member.guild.id,
                 message: null,
                 placeholderId: placeholderMatchingId,
                 baseUrl: state.baseUrl,

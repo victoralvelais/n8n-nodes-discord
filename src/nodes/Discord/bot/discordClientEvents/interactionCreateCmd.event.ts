@@ -1,10 +1,10 @@
-import { Client, GuildMemberRoleManager, TextChannel } from 'discord.js'
+import type { CacheType, Client, GuildMemberRoleManager, Interaction, TextChannel } from 'discord.js'
 
 import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
-  client.on('interactionCreate', (interaction) => {
+  client.on('interactionCreate', (interaction: Interaction<CacheType>) => {
     try {
       if (!interaction.isChatInputCommand()) return
       if (!interaction.guildId) {
@@ -35,11 +35,12 @@ export default async function (client: Client) {
 
               const isEnabled = await triggerWorkflow({
                 webhookId: trigger.webhookId,
-                message: null, // BUG - Not passing message, which is not passing serverId
+                serverId: interaction.guildId,
                 placeholderId: placeholderMatchingId,
                 baseUrl: state.baseUrl,
                 user: interaction.user,
                 channelId: interaction.channelId,
+                // TODO: Update to support multiple inputs
                 interactionValues: input ? [input] : undefined,
                 userRoles,
               }).catch((e) => e)

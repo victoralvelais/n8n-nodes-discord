@@ -1,10 +1,10 @@
-import { Client, TextChannel } from 'discord.js'
+import type { AnyThreadChannel, Client, TextChannel } from 'discord.js'
 
 import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
-  client.on('threadCreate', async (thread) => {
+  client.on('threadCreate', async (thread: AnyThreadChannel) => {
     try {
       const threadOwner = await thread.fetchOwner()
       const threadStarter = await thread.fetchStarterMessage()
@@ -37,6 +37,7 @@ export default async function (client: Client) {
               const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
               const isEnabled = await triggerWorkflow({
                 webhookId: trigger.webhookId,
+                serverId: thread.guild.id,
                 message: threadStarter,
                 placeholderId: placeholderMatchingId,
                 baseUrl: state.baseUrl,

@@ -1,10 +1,10 @@
-import { Client, TextChannel } from 'discord.js'
+import type { Client, GuildMember, TextChannel } from 'discord.js'
 
 import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
-  client.on('guildMemberAdd', (member) => {
+  client.on('guildMemberAdd', (member: GuildMember) => {
     try {
       if (member.user.system) return
       Object.keys(state.channels).forEach((key) => {
@@ -15,6 +15,7 @@ export default async function (client: Client) {
             const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
             const isEnabled = await triggerWorkflow({
               webhookId: trigger.webhookId,
+              serverId: member.guild.id,
               message: null,
               placeholderId: placeholderMatchingId,
               baseUrl: state.baseUrl,

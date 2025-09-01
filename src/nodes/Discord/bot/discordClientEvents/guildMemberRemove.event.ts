@@ -1,10 +1,10 @@
-import { Client, TextChannel } from 'discord.js'
+import type { Client, GuildMember, PartialGuildMember, TextChannel } from 'discord.js'
 
 import { addLog, generateUniqueId, placeholderLoading, triggerWorkflow } from '../helpers'
 import state from '../state'
 
 export default async function (client: Client) {
-  client.on('guildMemberRemove', (member) => {
+  client.on('guildMemberRemove', (member: GuildMember | PartialGuildMember) => {
     try {
       if (member.user.system) return
       const userRoles = member.roles.cache.map((role) => role.id)
@@ -20,6 +20,7 @@ export default async function (client: Client) {
             const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
             const isEnabled = await triggerWorkflow({
               webhookId: trigger.webhookId,
+              serverId: member.guild.id,
               message: null,
               placeholderId: placeholderMatchingId,
               baseUrl: state.baseUrl,

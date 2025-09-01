@@ -34,6 +34,7 @@ export default async function (client: Client) {
               const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
               const isEnabled = await triggerWorkflow({
                 webhookId: trigger.webhookId,
+                serverId: message.guildId,
                 message,
                 placeholderId: placeholderMatchingId,
                 baseUrl: state.baseUrl,
