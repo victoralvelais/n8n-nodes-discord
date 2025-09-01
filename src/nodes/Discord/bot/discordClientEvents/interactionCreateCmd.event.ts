@@ -33,21 +33,16 @@ export default async function (client: Client) {
 
               interaction.reply({ content: `/${interaction.commandName} sent`, ephemeral: true }).catch((e) => e)
 
-              const isEnabled = await triggerWorkflow(
-                trigger.webhookId,
-                null,
-                placeholderMatchingId,
-                state.baseUrl,
-                interaction.user,
-                interaction.channelId,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                input ? [input] : undefined,
+              const isEnabled = await triggerWorkflow({
+                webhookId: trigger.webhookId,
+                message: null, // BUG - Not passing message, which is not passing serverId
+                placeholderId: placeholderMatchingId,
+                baseUrl: state.baseUrl,
+                user: interaction.user,
+                channelId: interaction.channelId,
+                interactionValues: input ? [input] : undefined,
                 userRoles,
-              ).catch((e) => e)
+              }).catch((e) => e)
               if (isEnabled && trigger.placeholder) {
                 const channel = client.channels.cache.get(interaction.channelId)
                 const placeholder = await (channel as TextChannel)

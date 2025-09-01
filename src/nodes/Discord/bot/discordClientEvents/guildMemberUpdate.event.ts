@@ -39,18 +39,16 @@ export default async function (client: Client) {
 
               addLog(`triggerWorkflow ${trigger.webhookId}`, client)
               const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
-              const isEnabled = await triggerWorkflow(
-                trigger.webhookId,
-                null,
-                placeholderMatchingId,
-                state.baseUrl,
-                member.user,
-                key,
-                undefined,
-                undefined,
+              const isEnabled = await triggerWorkflow({
+                webhookId: trigger.webhookId,
+                message: null,
+                placeholderId: placeholderMatchingId,
+                baseUrl: state.baseUrl,
+                user: member.user,
+                channelId: key,
                 addedRoles,
                 removedRoles,
-              ).catch((e) => e)
+              }).catch((e) => e)
               if (isEnabled && trigger.placeholder) {
                 const channel = client.channels.cache.get(key)
                 const placeholder = await (channel as TextChannel)
@@ -70,16 +68,15 @@ export default async function (client: Client) {
             if (trigger.type === 'userNickUpdated') {
               addLog(`triggerWorkflow ${trigger.webhookId}`, client)
               const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
-              const isEnabled = await triggerWorkflow(
-                trigger.webhookId,
-                null,
-                placeholderMatchingId,
-                state.baseUrl,
-                member.user,
-                key,
-                undefined,
-                currentNick,
-              ).catch((e) => e)
+              const isEnabled = await triggerWorkflow({
+                webhookId: trigger.webhookId,
+                message: null,
+                placeholderId: placeholderMatchingId,
+                baseUrl: state.baseUrl,
+                user: member.user,
+                channelId: key,
+                nick: currentNick,
+              }).catch((e) => e)
               if (isEnabled && trigger.placeholder) {
                 const channel = client.channels.cache.get(key)
                 const placeholder = await (channel as TextChannel)

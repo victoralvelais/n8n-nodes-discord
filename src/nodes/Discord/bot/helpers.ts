@@ -190,21 +190,39 @@ export const getRoles = async (that: any): Promise<INodePropertyOptions[]> => {
   ]
 }
 
-export const triggerWorkflow = async (
-  webhookId: string,
-  message: Message | null,
-  placeholderId: string,
-  baseUrl: string,
-  user?: User,
-  channelId?: string,
-  presence?: string,
-  nick?: string,
-  addedRoles?: string[],
-  removedRoles?: string[],
-  interactionMessageId?: string,
-  interactionValues?: string[],
-  userRoles?: string[],
-): Promise<boolean> => {
+export interface TriggerWorkflowOptions {
+  webhookId: string
+  message?: Message | null
+  placeholderId: string
+  baseUrl: string
+  user?: User
+  channelId?: string
+  presence?: string
+  nick?: string
+  addedRoles?: string[]
+  removedRoles?: string[]
+  interactionMessageId?: string
+  interactionValues?: string[]
+  userRoles?: string[]
+}
+
+export const triggerWorkflow = async (options: TriggerWorkflowOptions): Promise<boolean> => {
+  const {
+    webhookId,
+    message,
+    placeholderId,
+    baseUrl,
+    user,
+    channelId,
+    presence,
+    nick,
+    addedRoles,
+    removedRoles,
+    interactionMessageId,
+    interactionValues,
+    userRoles,
+  } = options
+
   const headers = {
     accept: 'application/json',
   }

@@ -25,21 +25,16 @@ export default async function (client: Client) {
             addLog(`triggerWorkflow ${trigger.webhookId}`, client)
             const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
             const interactionValues = interaction.isButton() ? [interaction.customId] : interaction.values
-            const isEnabled = await triggerWorkflow(
-              trigger.webhookId,
-              null,
-              placeholderMatchingId,
-              state.baseUrl,
-              interaction.user,
-              interaction.channelId,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              interaction.message.id,
+            const isEnabled = await triggerWorkflow({
+              webhookId: trigger.webhookId,
+              message: null,
+              placeholderId: placeholderMatchingId,
+              baseUrl: state.baseUrl,
+              user: interaction.user,
+              channelId: interaction.channelId,
+              interactionMessageId: interaction.message.id,
               interactionValues,
-              userRoles,
-            ).catch((e) => e)
+            }).catch((e) => e)
 
             const labels: string[] = []
 

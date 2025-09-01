@@ -22,15 +22,15 @@ export default async function (client: Client) {
           ) {
             addLog(`triggerWorkflow ${trigger.webhookId}`, client)
             const placeholderMatchingId = trigger.placeholder ? generateUniqueId() : ''
-            const isEnabled = await triggerWorkflow(
-              trigger.webhookId,
-              null,
-              placeholderMatchingId,
-              state.baseUrl,
-              member.user,
-              key,
-              newPresence.status,
-            ).catch((e) => e)
+            const isEnabled = await triggerWorkflow({
+              webhookId: trigger.webhookId,
+              message: null,
+              placeholderId: placeholderMatchingId,
+              baseUrl: state.baseUrl,
+              user: member.user,
+              channelId: key,
+              presence: newPresence.status,
+            }).catch((e) => e)
             if (isEnabled && trigger.placeholder) {
               const channel = client.channels.cache.get(key)
               const placeholder = await (channel as TextChannel)
